@@ -615,10 +615,6 @@ angular.module("nbWebgl", [])
                                     var oceanTexture = texture;
                                     initTexture(oceanTexture, THREE.RepeatWrapping, 1.0, 1.0, 0.0, 0.0);
                                     backgroundUniforms.baseTexture.value = oceanTexture;
-                                    //waterTexture = texture;
-                                    //initTexture(waterTexture, THREE.ClampToEdgeWrapping);
-                                    //backgroundMaterial.map = waterTexture;
-                                    //backgroundMaterial.needsUpdate = true;
                                 });
                             }
                         });
