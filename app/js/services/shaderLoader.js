@@ -34,7 +34,7 @@ angular.module('WarOfTheRingApp')
             else
             {
                 // Get the file
-                $http.get('shaders/' + shaderName)
+                $http.get('resources/shaders/' + shaderName)
                     .then(
 
                         // Callback when file is loaded

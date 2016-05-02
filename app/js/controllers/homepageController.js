@@ -26,9 +26,10 @@ angular.module('WarOfTheRingApp')
             $scope.isShadowVisible = ! $scope.isShadowVisible;
         };
 
-        // Dafault state is without shadow
+        // Default state is without shadow
         $scope.isShadowVisible = false;
 
+        // Change url to switch to the game
         $scope.launchGame = function() {
             $location.path('game');
         };
