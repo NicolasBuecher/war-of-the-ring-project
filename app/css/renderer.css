@@ -1,8 +1,8 @@
 /*#ui-container {
     display: block;
     width: 100%;
-}
+}*/
 
 canvas {
-
-}*/
+    display: block;
+}
