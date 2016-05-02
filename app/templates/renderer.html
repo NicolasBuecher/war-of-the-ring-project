@@ -1,7 +1,7 @@
 <div id="ui-container">
     <label>Water Texture :
-        <select ng-model="waterTexture"
-                ng-options="t.path as t.name for t in waterTextures">
+        <select ng-model="oceanTexture"
+                ng-options="t.path as t.name for t in oceanTextures">
         </select>
     </label>
     <label>Land Texture :
@@ -15,7 +15,7 @@
 </div>
 
 <div nb-webgl
-     water-texture="waterTexture"
+     ocean-texture="oceanTexture"
      land-texture="landTexture"
      mountain-bump-scale="mountainBumpScale">
 </div>

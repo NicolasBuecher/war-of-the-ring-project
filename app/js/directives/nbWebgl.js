@@ -24,7 +24,7 @@ angular.module("nbWebgl", [])
 
                     // Create an isolate scope for this directive
                     scope: {
-                        'waterTextureChoice': '=waterTexture',       // Pay attention to the FUCKING NORMALIZATION : some-thing becomes someThing !
+                        'oceanTextureChoice': '=oceanTexture',       // Pay attention to the FUCKING NORMALIZATION : some-thing becomes someThing !
                         'landTextureChoice': '=landTexture',          // 'isolateProperty': '=normalizedProperty' and in the DOM future-normalized-property="parentProperty"
                         'mountainBumpScaleValue': '=mountainBumpScale'
                     },
@@ -34,7 +34,7 @@ angular.module("nbWebgl", [])
                     {
 
                         // Load textures and get a promise to use it right after it has been loaded
-                        $scope.texturePromise = textureLoader.getTextures([$scope.waterTextureChoice, $scope.landTextureChoice, 'texture_dirt.jpg', 'texture_sand.jpg', 'texture_grass.jpg', 'texture_rock.jpg', 'texture_snow.jpg', 'heightmap1.png', "ocean_texture.jpg", "cloudEffectTexture.png", "depthmap.png"]);
+                        $scope.texturePromise = textureLoader.getTextures(['land_texture.jpg', 'texture_dirt.jpg', 'texture_sand.jpg', 'texture_grass.jpg', 'texture_rock.jpg', 'texture_snow.jpg', 'heightmap1.png', "ocean_texture.jpg", "cloudEffectTexture.png", "depthmap.png"]);
 
                         // Load territory data and get a promise to use it right after it has been loaded
                         $scope.territoryPromise = territoryLoader.getTerritories();
@@ -490,48 +490,44 @@ angular.module("nbWebgl", [])
                         // Get the textures
                         scope.texturePromise.then(function(textures) {
 
-                            // Get and set the water texture
-                            waterTexture = textures[0];
-                            initTexture(waterTexture, THREE.ClampToEdgeWrapping);
-
                             // Get and set territory texture
-                            frontTerritoryTexture = textures[1];
+                            frontTerritoryTexture = textures[0];
                             initTexture(frontTerritoryTexture, THREE.RepeatWrapping, 1/1000, 1/680, 0.492, 0.501);
                             
                             // Get and set the dirt texture
-                            var dirtTexture = textures[2];
+                            var dirtTexture = textures[1];
                             initTexture(dirtTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
 
                             // Get and set the sand texture
-                            var sandTexture = textures[3];
+                            var sandTexture = textures[2];
                             initTexture(sandTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
 
                             // Get and set the grass texture
-                            var grassTexture = textures[4];
+                            var grassTexture = textures[3];
                             initTexture(grassTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
 
                             // Get and set the rock texture
-                            var rockTexture = textures[5];
+                            var rockTexture = textures[4];
                             initTexture(rockTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
 
                             // Get and set the snow texture
-                            var snowTexture = textures[6];
+                            var snowTexture = textures[5];
                             initTexture(snowTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
 
                             // Get and set the heightmap for the mountains
-                            var mountainHeightmap1 = textures[7];
+                            var mountainHeightmap1 = textures[6];
                             initTexture(mountainHeightmap1, THREE.ClampToEdgeWrapping);
 
                             // Get and set the ocean texture
-                            var oceanTexture = textures[8];
+                            var oceanTexture = textures[7];
                             initTexture(oceanTexture, THREE.RepeatWrapping, 1.0, 1.0, 0.0, 0.0);
 
                             // Get and set the noise texture
-                            var noiseTexture = textures[9];
+                            var noiseTexture = textures[8];
                             initTexture(noiseTexture, THREE.RepeatWrapping, 1.0, 1.0, 0.0, 0.0);
 
                             // Get and set the depthmap for the ocean
-                            var oceanDepthmapTexture = textures[10];
+                            var oceanDepthmapTexture = textures[9];
                             initTexture(oceanDepthmapTexture, THREE.ClampToEdgeWrapping);
 
 
@@ -549,7 +545,7 @@ angular.module("nbWebgl", [])
                             mountainUniforms.snowTexture.value = snowTexture;
                             mountainUniforms.bumpTexture.value = mountainHeightmap1;
 
-                            backgroundUniforms.baseTexture.value = waterTexture;
+                            backgroundUniforms.baseTexture.value = oceanTexture;
                             backgroundUniforms.noiseTexture.value = noiseTexture;
                             backgroundUniforms.dirtTexture.value = dirtTexture;
                             backgroundUniforms.depthmap.value = oceanDepthmapTexture;
@@ -612,7 +608,7 @@ angular.module("nbWebgl", [])
                         });
 
                         // Update water texture when another texture is picked by the user
-                        scope.$watch('waterTextureChoice', function(newValue, oldValue, scope) {
+                        scope.$watch('oceanTextureChoice', function(newValue, oldValue, scope) {
                             if (newValue !== oldValue)
                             {
                                 textureLoader.getTexture(newValue).then(function(texture) {
