@@ -40,7 +40,7 @@ angular.module('WarOfTheRingApp')
                 textureLoader.load(
 
                     // Resource URL
-                    'textures/' + textureName,
+                    'resources/textures/' + textureName,
 
                     // Callback when texture is loaded
                     function(texture)
