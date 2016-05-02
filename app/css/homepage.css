@@ -1,0 +1,281 @@
+/*Reset margin and padding*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/*Contains the header and the presentations*/
+#homepage-container-1 {
+    display: block;
+    width: 100%;
+    transition: -webkit-filter ease-in 1s;
+}
+
+/*5px blur for the element and its children, default is 0px*/
+.blur {
+    -webkit-filter: blur(5px);
+}
+
+/*Contains the title and the subtitle*/
+#homepage-header {
+    display: block;
+    width: 100%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+/*Contains the title as an image to center*/
+#homepage-title {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    height: auto;
+}
+
+/*Contains an additional information to center, with the title font*/
+#homepage-subtitle {
+    display: block;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 12.5%;
+    margin-right: 12.5%;
+
+    font-family: "Trajan Pro", Candara, sans-serif;
+    font-size: 3em;
+    text-align: center;
+}
+
+/*Presentations are contained in a table, with the basic font*/
+#homepage-presentations {
+    display: table;
+    width: 100%;
+    border-spacing: 0em 1.5em;
+    padding-top: 1%;
+    padding-bottom: 1%;
+
+    font-family: Candara, sans-serif;
+    font-size: 1.5em;
+}
+
+/*Each row of the table contains two table-cell to create to columns of organized text*/
+.presentation-row {
+    display: table-row;
+    width: 100%;
+}
+
+/*French presentation is located in the left column*/
+.presentation-french {
+    display: table-cell;
+    width: 50%;
+    padding-left: 10%;
+    padding-right: 5%;
+}
+
+/*English presentation is located in the right column*/
+.presentation-english {
+    display: table-cell;
+    width: 50%;
+    padding-left: 5%;
+    padding-right: 10%;
+}
+
+/*Contains the ring icon to launch the game, has to be thin to handle the click on both image and text it contains*/
+#homepage-container-2 {
+    position: relative;
+    z-index: 2;
+
+    display: block;
+    width: 15%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+/*Show the user he can click this element*/
+#homepage-container-2:hover {
+    cursor: pointer;
+}
+
+/*Image of the one ring which has to be resized and centered*/
+#ring {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    height: auto;
+
+    transition: -webkit-filter ease-in 1s;
+}
+
+/*0.7 saturate for the element and its children, default is 1*/
+.saturate {
+    -webkit-filter: saturate(0.7);
+}
+
+/*70% brightness for the element and its children, default is 100%*/
+.brightness {
+    -webkit-filter: brightness(70%);
+}
+
+/*Additional message to the image which has to be centered, with the special LOTR font*/
+#ring-message {
+    display: block;
+
+    font-family: ringbearer, "Trajan Pro", Candara, sans-serif;
+    font-size: 2em;
+    text-align: center;
+
+    transition: color ease-in 1s;
+}
+
+/*Red font color when the user hover the element*/
+.ring-message-red {
+    color: darkred;
+}
+
+/*Black font color when the user doesn't hover the element*/
+.ring-message-black {
+    color: black;
+}
+
+/*Cover the whole page with a black transparent block*/
+#shadow {
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    background-color: black;
+    opacity: 0.97;
+
+    transition: opacity ease-in 1s;
+}
+
+/*Hide the shadow block setting its opacity property to 0*/
+#shadow.ng-hide {
+    opacity: 0;
+}
+
+/*Contains an intro, links to libraries websites and text*/
+#homepage-container-3 {
+    width: 100%;
+    transition: -webkit-filter ease-in 1s;
+}
+
+/*An image to make a simple separation between two parts of the website*/
+.black-speech {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    max-width: 100%;
+    height: auto;
+}
+
+/*Introduction has to be centered, text with the basic font*/
+#about-project-intro {
+    display: block;
+
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 10%;
+    margin-right: 10%;
+
+    font-family: Candara, sans-serif;
+    font-size: 1.5em;
+    text-align: center;
+
+}
+
+/*Technologies infos are contained in a table, with the basic font*/
+#technologies {
+    display: table;
+    width: 100%;
+    border-spacing: 0em 1.5em;
+    padding-top: 1%;
+    padding-bottom: 1%;
+
+    font-family: Candara, sans-serif;
+    font-size: 1.3em;
+}
+
+/*Each row of the table contains two table-cell to organize the text in two columns*/
+.technology-row {
+    display: table-row;
+    width: 100%;
+}
+
+/*The first column contains a technology logo in each cell*/
+.technology-logo {
+    display: table-cell;
+    width: 20%;
+    padding-left: 15%;
+    padding-right: 1%;
+}
+
+/*The second column contains an additional information in each cell*/
+.technology-info {
+    display: table-cell;
+    width: 48%;
+    padding-left: 1%;
+    padding-right: 15%;
+    vertical-align: middle;
+}
+
+/*Set the max-width of the technology logos to 100% of the cell*/
+.icon {
+    max-width: 100%;
+    height: auto;
+}
+
+/*Centered and title font for the element*/
+.title {
+    display: block;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 15%;
+    margin-right: 15%;
+
+    font-family: "Trajan Pro", Candara, sans-serif;
+    font-size: 3em;
+    text-align: center;
+}
+
+#credits {
+    display: block;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+
+    font-family: Candara, sans-serif;
+    font-size: 1.5em;
+}
+
+#credit-list {
+    display: block;
+    padding-left: 5%;
+    padding-right: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    font-family: Candara, sans-serif;
+    font-size: 0.89em; /*I don't understand why 1.3em doesn't work. Here 0.89em equals 1.3em of the other blocks*/
+}
+
+#about-me {
+    display: block;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+
+    font-family: Candara, sans-serif;
+    font-size: 1.5em;
+}
