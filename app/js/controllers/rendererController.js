@@ -13,7 +13,7 @@ angular.module('WarOfTheRingApp')
     .controller('RendererController', function ($scope) {
 
         // Select options to choose the water texture
-        $scope.waterTextures = [
+        $scope.oceanTextures = [
             {   name: 'Ocean',    path: 'ocean_texture.jpg'      },
             {   name: 'Points',   path: 'ocean_texture_points.jpg'     },
             {   name: 'Carpet',   path: 'ocean_texture_carpet.jpg'     }
@@ -31,7 +31,7 @@ angular.module('WarOfTheRingApp')
         ];
 
         // Set default textures
-        $scope.waterTexture = $scope.waterTextures[0].path;
+        $scope.oceanTexture = $scope.oceanTextures[0].path;
         $scope.landTexture = $scope.landTextures[0].path;
         $scope.mountainBumpScale = 50.0;
 
