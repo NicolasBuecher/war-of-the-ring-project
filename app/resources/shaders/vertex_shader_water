@@ -1,0 +1,11 @@
+uniform sampler2D depthmap;
+varying vec2 vUv;
+varying float depth;
+
+void main()
+{
+    vec4 depth1 = texture2D(depthmap, uv);
+    depth = depth1.r;
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+}

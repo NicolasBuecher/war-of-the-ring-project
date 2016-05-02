@@ -1,0 +1,20 @@
+//uniform sampler2D text;
+uniform sampler2D dirtTexture;
+uniform sampler2D sandTexture;
+uniform sampler2D grassTexture;
+uniform sampler2D rockTexture;
+uniform sampler2D snowTexture;
+varying float vAmount;
+varying vec2 vUv;
+
+ void main()
+ {
+ 	//gl_FragColor = texture2D(text, vUv);
+ 	//gl_FragColor = vec4(0, vAmount/1.1, 0, 1) * texture2D(text, vUv);
+
+    vec4 grass = (smoothstep(0.25, 0.30, vAmount) - smoothstep(0.45, 0.55, vAmount)) * texture2D(grassTexture, vUv*10.0);
+    vec4 rock = (smoothstep(0.50, 0.60, vAmount) - smoothstep(0.70, 0.80, vAmount)) * texture2D(rockTexture, vUv*10.0);
+    vec4 snow = (smoothstep(0.70, 0.80, vAmount)) * texture2D(snowTexture, vUv*10.0);
+
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0) + grass + rock + snow;
+ }
