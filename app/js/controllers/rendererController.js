@@ -15,14 +15,14 @@ angular.module('WarOfTheRingApp')
         // Select options to choose the water texture
         $scope.waterTextures = [
             {   name: 'Ocean',    path: 'ocean_texture.jpg'      },
-            {   name: 'Points',   path: 'water_texture15.jpg'     },
-            {   name: 'Carpet',   path: 'water_texture16.jpg'     }
+            {   name: 'Points',   path: 'ocean_texture_points.jpg'     },
+            {   name: 'Carpet',   path: 'ocean_texture_carpet.jpg'     }
         ];
 
         // Select options to choose the land texture
         $scope.landTextures = [
             {   name: 'Soil',     path: 'land_texture.jpg'        },
-            {   name: 'Map',      path: 'middleearth1.png'        },
+            {   name: 'Map',      path: 'board_game.png'          },
             {   name: 'Sand',     path: 'texture_sand.jpg'        },
             {   name: 'Grass',    path: 'texture_grass.jpg'       },
             {   name: 'Grass2',   path: 'grass1.jpg'              },
