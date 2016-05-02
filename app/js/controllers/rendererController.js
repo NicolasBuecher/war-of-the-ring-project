@@ -32,7 +32,7 @@ angular.module('WarOfTheRingApp')
 
         // Set default textures
         $scope.oceanTexture = $scope.oceanTextures[0].path;
-        $scope.landTexture = $scope.landTextures[0].path;
+        $scope.landTexture = $scope.landTextures[6].path;
         $scope.mountainBumpScale = 50.0;
 
     });

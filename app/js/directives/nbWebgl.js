@@ -34,7 +34,7 @@ angular.module("nbWebgl", [])
                     {
 
                         // Load textures and get a promise to use it right after it has been loaded
-                        $scope.texturePromise = textureLoader.getTextures(['land_texture.jpg', 'texture_dirt.jpg', 'texture_sand.jpg', 'texture_grass.jpg', 'texture_rock.jpg', 'texture_snow.jpg', 'heightmap1.png', "ocean_texture.jpg", "cloudEffectTexture.png", "depthmap.png"]);
+                        $scope.texturePromise = textureLoader.getTextures(['grass3.jpg', 'texture_dirt.jpg', 'texture_sand.jpg', 'texture_grass.jpg', 'texture_rock.jpg', 'texture_snow.jpg', 'heightmap1.png', "ocean_texture.jpg", "cloudEffectTexture.png", "depthmap.png"]);
 
                         // Load territory data and get a promise to use it right after it has been loaded
                         $scope.territoryPromise = territoryLoader.getTerritories();
@@ -492,8 +492,9 @@ angular.module("nbWebgl", [])
 
                             // Get and set territory texture
                             frontTerritoryTexture = textures[0];
-                            initTexture(frontTerritoryTexture, THREE.RepeatWrapping, 1/1000, 1/680, 0.492, 0.501);
-                            
+                            //initTexture(frontTerritoryTexture, THREE.RepeatWrapping, 1/1000, 1/680, 0.492, 0.501);
+                            initTexture(frontTerritoryTexture, THREE.RepeatWrapping, 1/1, 1/0.68, 0.0, 0.0);
+
                             // Get and set the dirt texture
                             var dirtTexture = textures[1];
                             initTexture(dirtTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
