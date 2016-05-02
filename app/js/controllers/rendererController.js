@@ -14,7 +14,7 @@ angular.module('WarOfTheRingApp')
 
         // Select options to choose the water texture
         $scope.waterTextures = [
-            {   name: 'Ocean',    path: 'water_texture2.jpg'      },
+            {   name: 'Ocean',    path: 'ocean_texture.jpg'      },
             {   name: 'Points',   path: 'water_texture15.jpg'     },
             {   name: 'Carpet',   path: 'water_texture16.jpg'     }
         ];

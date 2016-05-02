@@ -34,7 +34,7 @@ angular.module("nbWebgl", [])
                     {
 
                         // Load textures and get a promise to use it right after it has been loaded
-                        $scope.texturePromise = textureLoader.getTextures([$scope.waterTextureChoice, $scope.landTextureChoice, 'texture_dirt.jpg', 'texture_sand.jpg', 'texture_grass.jpg', 'texture_rock.jpg', 'texture_snow.jpg', 'heightmap1.png', "water_texture2.jpg", "cloudEffectTexture.png", "depthmap.png"]);
+                        $scope.texturePromise = textureLoader.getTextures([$scope.waterTextureChoice, $scope.landTextureChoice, 'texture_dirt.jpg', 'texture_sand.jpg', 'texture_grass.jpg', 'texture_rock.jpg', 'texture_snow.jpg', 'heightmap1.png', "ocean_texture.jpg", "cloudEffectTexture.png", "depthmap.png"]);
 
                         // Load territory data and get a promise to use it right after it has been loaded
                         $scope.territoryPromise = territoryLoader.getTerritories();
