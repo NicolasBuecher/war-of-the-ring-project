@@ -1,17 +1,21 @@
+/*Load special LOTR font*/
 @font-face {
     font-family: 'ringbearer';
     src: url('../resources/fonts/RingbearerMedium.TTF');
 }
 
+/*Reset margin and padding*/
 * {
     margin: 0;
     padding: 0;
 }
 
+/*Avoid the page to display before HTML content is loader*/
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
 
+/*Is wrapped with a backgorund image for the homepage, should remove it for the game*/
 body {
     background-image: url('../resources/textures/background.jpg');
     background-repeat: no-repeat;
