@@ -6,6 +6,6 @@ void main()
 {
     vec4 depth1 = texture2D(depthmap, uv);
     depth = depth1.r;
-    vUv = uv;
+    vUv = uv*10.0;
     gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 }
