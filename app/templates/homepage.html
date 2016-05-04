@@ -121,7 +121,9 @@
         </p>
         <ul id="credit-list">
             <li ng-repeat="c in credits">
-                <a href="{{c.link}}" target="_blank">{{c.author}}</a>, {{c.thanks}}.
+                <a ng-if="c.link !== ''" href="{{c.link}}" target="_blank">{{c.author}}</a>
+                <b ng-if="c.link === ''">{{c.author}}</b>
+                , {{c.thanks}}.
             </li>
             <li>
                 MrDoob, auteur de la bibliothèque ThreeJS, pour son phénoménal travail, sa doc et ses nombreux exemples.
