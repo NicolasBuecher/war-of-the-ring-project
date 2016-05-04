@@ -18,6 +18,21 @@ angular.module('WarOfTheRingApp')
                 author: 'Mr.doob',
                 thanks: 'the author of the ThreeJS library, for his huge work, his doc and all his great examples',
                 link: 'http://mrdoob.com'
+            },
+            {
+                author: 'stemkosky',
+                thanks: 'the author of numerous ThreeJS examples, for his very useful work',
+                link: ''
+            },
+            {
+                author: 'Author 3',
+                thanks: 'Thanks 3',
+                link: 'Link 3'
+            },
+            {
+                author: 'Author 4',
+                thanks: 'Thanks 4',
+                link: 'Link 4'
             }
         ];
 

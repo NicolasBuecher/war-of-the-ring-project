@@ -1,0 +1,8 @@
+*.xml
+*.iml
+app/js/poubelle.js
+app/libs/angular-animate.min.js
+app/libs/angular-route.min.js
+app/libs/angular.min.js
+app/libs/three.min.js
+app/resources/territories/test.json
