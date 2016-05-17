@@ -7,7 +7,7 @@
 /**
  * Routing function
  */
-angular.module('WarOfTheRingApp', ["ngRoute", "ngAnimate", "nbWebgl"])
+angular.module('WarOfTheRingApp', ["ngRoute", "ngAnimate", "nbWebgl", "capitalize"])
     .config(function ($routeProvider) {
 
         $routeProvider
