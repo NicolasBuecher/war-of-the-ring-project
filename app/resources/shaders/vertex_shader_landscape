@@ -1,0 +1,33 @@
+uniform sampler2D bumpTexture;
+uniform float bumpScale;
+
+varying float mountainValue;
+varying float forestValue;
+varying float waterValue;
+varying vec2 vUv;
+
+void main()
+{
+    // Send UV info to fragment shader
+    vUv = uv;
+
+    // Extract all the info from the bumpTexture
+    vec4 bumpData = texture2D(bumpTexture, uv);
+    mountainValue = bumpData.r;
+    forestValue = bumpData.g;
+    waterValue = bumpData.b;
+
+    // Compute new position
+    vec3 newPosition = position;
+    if ((mountainValue > forestValue) && (mountainValue > waterValue))
+    {
+        newPosition = position + bumpScale * 100.0 * normal * mountainValue * 3.0;
+    }
+    else if ((forestValue > mountainValue) && (forestValue > waterValue))
+    {
+        newPosition = position + bumpScale * 100.0 * normal * forestValue;
+    }
+
+    // Assign the final position
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+}
