@@ -1,23 +1,54 @@
-<!--<div id="ui-container">
-    <label>Water Texture :
-        <select ng-model="oceanTexture"
-                ng-options="t.path as t.name for t in oceanTextures">
-        </select>
-    </label>
-    <label>Land Texture :
-        <select ng-model="landTexture"
-                ng-options="t.path as t.name for t in landTextures">
-        </select>
-    </label>
-    <label>Bump scale :
-        <input type="range" min="0" max="100" ng-model="mountainBumpScale" />
-    </label>
+<img src="resources/textures/parameters_button.png" id="ui-button" ng-show="!isVisible['UI']" ng-click="toggle('UI');"/>
+
+<div id="ui-container" ng-show="isVisible['UI']">
+
+    <img src="resources/textures/close_button.png" id="close-button" ng-click="toggle('UI');"/>
+
+    <div ng-repeat="(key, parameter) in parameters">
+
+        <div class="category-label">{{key}}<img ng-src="{{isVisible[key] && 'resources/textures/up-arrow-icon.png' || 'resources/textures/down-arrow-icon.png' }}" class="unfold-button" ng-click="toggle(key);"/></div>
+
+        <div class="parameters" ng-show="isVisible[key]">
+
+            <div class="parameter-labels">
+                <div></div>
+                <div class="parameter-label">Texture</div>
+                <div class="parameter-label">U Repeat</div>
+                <div class="parameter-label">V Repeat</div>
+            </div>
+
+            <div class="parameter" ng-repeat="(key, value) in parameter['textures']">
+                <label>{{key + " :"}}</label>
+                <div class="value">
+                    <select ng-model="value.path" ng-options="t.path as t.name for t in paths[key]"></select>
+                </div>
+                <div class="value" ng-if="key !== 'bump'">
+                    <input type="range" min="0" max="500" ng-model="value.u"/>
+                    <div>{{value.u}}</div>
+                </div>
+                <div class="value" ng-if="key !== 'bump'">
+                    <input type="range" min="0" max="500" ng-model="value.v"/>
+                    <div>{{value.v}}</div>
+                </div>
+            </div>
+
+            <div class="parameter" ng-repeat="(key, value) in parameter['floats']">
+                <label class="label">{{key + " :"}}</label>
+                <div class="value">
+                    <input type="range" min="0" max="1" step="0.01" ng-model="parameter['floats'][key]" />
+                    <div>{{value}}</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
--->
+
 <div nb-webgl
-     ocean-texture="oceanTexture"
-     land-texture="landTexture"
-     mountain-bump-scale="mountainBumpScale">
+     landscape-parameters="landscapeParameters"
+     territory-parameters="territoryParameters">
 </div>
 
 
