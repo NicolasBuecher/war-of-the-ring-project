@@ -113,8 +113,8 @@ select {
     vertical-align: top;
 }
 
-.display-value.ng-hide {
-    opacity: 0.0;
+.hidden {
+    visibility: hidden;
 }
 
 canvas {

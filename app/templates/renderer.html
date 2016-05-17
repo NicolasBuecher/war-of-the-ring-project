@@ -22,11 +22,11 @@
                 <div class="value">
                     <select ng-model="value.path" ng-options="t.path as t.name for t in paths[key]"></select>
                 </div>
-                <div class="value" ng-if="key !== 'bump'">
+                <div class="value" ng-class="{'hidden': key === 'bump'}">
                     <input type="range" min="0" max="500" ng-model="value.u"/>
                     <div>{{value.u}}</div>
                 </div>
-                <div class="value" ng-if="key !== 'bump'">
+                <div class="value" ng-class="{'hidden': key === 'bump'}">
                     <input type="range" min="0" max="500" ng-model="value.v"/>
                     <div>{{value.v}}</div>
                 </div>
