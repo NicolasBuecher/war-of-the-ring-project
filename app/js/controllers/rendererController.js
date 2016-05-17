@@ -40,10 +40,12 @@ angular.module('WarOfTheRingApp')
         ];
         $scope.paths["forest"] = [
             { name: 'Dark Green',   path: 'forest_texture.jpg'          },
+            { name: 'Dark Green2',  path: 'forest_texture3.jpg'          },
             { name: 'Real',         path: 'forest_texture2.jpg'         }
         ];
         $scope.paths["trunk"] = [
-            { name: 'Dark Brown',   path: 'trunk_texture3.jpg'          }
+            { name: 'Dark Brown',   path: 'trunk_texture3.jpg'          },
+            { name: 'Dark Brown2',  path: 'trunk_texture4.jpg'          }
         ];
         $scope.paths["noise"] = [
             { name: 'Cloud',        path: 'cloudEffectTexture.png'      }
@@ -71,18 +73,18 @@ angular.module('WarOfTheRingApp')
         $scope.landscapeParameters["textures"]              = {};
         $scope.landscapeParameters["textures"]["water"]     = { 'path': $scope.paths['water'][0].path,  'u': 3.0,   'v': 3.0    };
         $scope.landscapeParameters["textures"]["snow"]      = { 'path': $scope.paths['snow'][0].path,   'u': 50.0,  'v': 50.0   };
-        $scope.landscapeParameters["textures"]["rock"]      = { 'path': $scope.paths['rock'][1].path,   'u': 500.0, 'v': 500.0  };
-        $scope.landscapeParameters["textures"]["dirt"]      = { 'path': $scope.paths['dirt'][0].path,   'u': 500.0, 'v': 500.0  };
+        $scope.landscapeParameters["textures"]["rock"]      = { 'path': $scope.paths['rock'][1].path,   'u': 200.0, 'v': 200.0  };
+        $scope.landscapeParameters["textures"]["dirt"]      = { 'path': $scope.paths['dirt'][0].path,   'u': 200.0, 'v': 200.0  };
         $scope.landscapeParameters["textures"]["forest"]    = { 'path': $scope.paths['forest'][0].path, 'u': 100.0, 'v': 100.0  };
-        $scope.landscapeParameters["textures"]["trunk"]     = { 'path': $scope.paths['trunk'][0].path,  'u': 500.0, 'v': 500.0  };
+        $scope.landscapeParameters["textures"]["trunk"]     = { 'path': $scope.paths['trunk'][0].path,  'u': 200.0, 'v': 200.0  };
         $scope.landscapeParameters["textures"]["noise"]     = { 'path': $scope.paths['noise'][0].path,  'u': 10.0,  'v': 10.0   };
         $scope.landscapeParameters["textures"]["bump"]      = { 'path': $scope.paths['bump'][0].path,   'u': 1.0,   'v': 1.0    };
 
         $scope.landscapeParameters["floats"]                = {};
         $scope.landscapeParameters["floats"]["baseSpeed"]   = 0.01;
         $scope.landscapeParameters["floats"]["noiseScale"]  = 0.25;
-        $scope.landscapeParameters["floats"]["alpha"]       = 0.93;
-        $scope.landscapeParameters["floats"]["bumpScale"]   = 0.05;
+        $scope.landscapeParameters["floats"]["alpha"]       = 0.9;
+        $scope.landscapeParameters["floats"]["bumpScale"]   = 5.0;
 
         // Set default territory parameters
         $scope.territoryParameters                          = {};
@@ -99,6 +101,28 @@ angular.module('WarOfTheRingApp')
         $scope.isVisible['UI']                              = false;
         $scope.isVisible['landscape']                       = false;
         $scope.isVisible['territory']                       = false;
+
+
+        // Set range arguments for each parameter
+        $scope.range                                        = {};
+
+        $scope.range['min']                                 = {};
+        $scope.range['min']['baseSpeed']                    = 0.0;
+        $scope.range['min']['noiseScale']                   = 0.0;
+        $scope.range['min']['alpha']                        = 0.0;
+        $scope.range['min']['bumpScale']                    = 0.0;
+
+        $scope.range['max']                                 = {};
+        $scope.range['max']['baseSpeed']                    = 0.1;
+        $scope.range['max']['noiseScale']                   = 0.5;
+        $scope.range['max']['alpha']                        = 1.0;
+        $scope.range['max']['bumpScale']                    = 50.0;
+
+        $scope.range['step']                                = {};
+        $scope.range['step']['baseSpeed']                   = 0.01;
+        $scope.range['step']['noiseScale']                  = 0.01;
+        $scope.range['step']['alpha']                       = 0.1;
+        $scope.range['step']['bumpScale']                   = 1.0;
 
 
         // Store all parameters in one big object
