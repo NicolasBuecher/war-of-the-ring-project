@@ -6,7 +6,7 @@
 
     <div ng-repeat="(key, parameter) in parameters">
 
-        <div class="category-label">{{key}}<img ng-src="{{isVisible[key] && 'resources/textures/up-arrow-icon.png' || 'resources/textures/down-arrow-icon.png' }}" class="unfold-button" ng-click="toggle(key);"/></div>
+        <div class="category-label">{{key | capitalize:true}}<img ng-src="{{isVisible[key] && 'resources/textures/up-arrow-icon.png' || 'resources/textures/down-arrow-icon.png' }}" class="unfold-button" ng-click="toggle(key);"/></div>
 
         <div class="parameters" ng-show="isVisible[key]">
 
@@ -18,7 +18,7 @@
             </div>
 
             <div class="parameter" ng-repeat="(key, value) in parameter['textures']">
-                <label>{{key + " :"}}</label>
+                <label>{{key + " :" | capitalize:true}}</label>
                 <div class="value">
                     <select ng-model="value.path" ng-options="t.path as t.name for t in paths[key]"></select>
                 </div>
@@ -33,7 +33,7 @@
             </div>
 
             <div class="parameter" ng-repeat="(key, value) in parameter['floats']">
-                <label class="label">{{key + " :"}}</label>
+                <label class="label">{{key + " :" | capitalize:true}}</label>
                 <div class="value">
                     <input type="range" min="0" max="1" step="0.01" ng-model="parameter['floats'][key]" />
                     <div>{{value}}</div>
