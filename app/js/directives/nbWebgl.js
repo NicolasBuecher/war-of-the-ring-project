@@ -666,7 +666,7 @@ angular.module("nbWebgl", [])
                                             if (newValue[k][key].v != oldValue[k][key].v)
                                             {
                                                 //Update uniforms
-                                                frontTerritoryMaterial.map.repeat.set(newValue[k][key].u, newValue[k][key].v);
+                                                frontTerritoryMaterial.map.repeat.set(1/newValue[k][key].u, 1/newValue[k][key].v);
                                                 //territoryUniforms[key + 'UV'].value.y = newValue[k][key].v;
                                             }
                                         });

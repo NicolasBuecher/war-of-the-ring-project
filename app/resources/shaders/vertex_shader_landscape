@@ -21,11 +21,11 @@ void main()
     vec3 newPosition = position;
     if ((mountainValue > forestValue) && (mountainValue > waterValue))
     {
-        newPosition = position + bumpScale * 100.0 * normal * mountainValue * 3.0;
+        newPosition = position + bumpScale * normal * mountainValue * 3.0;
     }
     else if ((forestValue > mountainValue) && (forestValue > waterValue))
     {
-        newPosition = position + bumpScale * 100.0 * normal * forestValue;
+        newPosition = position + bumpScale * normal * forestValue;
     }
 
     // Assign the final position
