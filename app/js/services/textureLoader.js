@@ -95,7 +95,6 @@ angular.module('WarOfTheRingApp')
 
                 // Return all promises as one promise
                 return $q.all(promises);
-
             }
         }
 

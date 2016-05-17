@@ -1,7 +1,121 @@
-/*#ui-container {
+#ui-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+
     display: block;
+    width: 30%;
+    height: 100%;
+    padding: 0 1%;
+
+    border: 2px solid black;
+    background: rgba(50, 50, 50, 0.6);
+
+    font-family: Candara, Arial, sans-serif;
+    color: white;
+
+    overflow: auto;
+
+    transition: all linear 0.25s;
+}
+
+#ui-container.ng-hide {
+    left: -15%;
+    opacity: 0.0;
+}
+
+#ui-button {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: block;
+    padding: 1%;
+
+    cursor: pointer;
+
+    transition: all linear 0.5s;
+}
+
+#ui-button.ng-hide {
+    opacity: 0.0;
+}
+
+#close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    display: block;
+    padding: 1%;
+
+    cursor: pointer;
+}
+
+.parameters {
+    display: table;
     width: 100%;
-}*/
+
+    border-spacing: 0em 1.0em;
+}
+
+.parameters.ng-hide {
+
+}
+
+.category-label {
+    display: block;
+    margin: 1%;
+    padding: 1%;
+
+    border-bottom: 1px solid white;
+
+    font-size: 1.5em;
+}
+
+.unfold-button {
+    margin-left: 3%;
+
+    cursor: pointer;
+}
+
+.parameter-labels {
+    display: table-row;
+    width: 100%;
+}
+
+.parameter-label {
+    display: table-cell;
+
+    text-align: center;
+}
+
+.parameter {
+    display: table-row;
+    width: 100%;
+}
+
+label {
+    display: table-cell;
+
+    text-align: left;
+    vertical-align: top;
+}
+
+select {
+    width: 60%;
+}
+
+.value {
+    display: table-cell;
+
+    text-align: center;
+    vertical-align: top;
+}
+
+.display-value.ng-hide {
+    opacity: 0.0;
+}
 
 canvas {
     display: block;

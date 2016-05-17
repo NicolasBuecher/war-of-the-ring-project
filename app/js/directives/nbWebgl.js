@@ -20,28 +20,50 @@ angular.module("nbWebgl", [])
                 return {
 
                     // Directive can be used as an element or as an attribute
-                    restrict: "A",          // When used as an element, pan doesn't work as it should, so ues it as an attribute
+                    restrict: "A",          // When used as an element, pan doesn't work as it should, so use it as an attribute
 
                     // Create an isolate scope for this directive
                     scope: {
-                        'oceanTextureChoice': '=oceanTexture',       // Pay attention to the FUCKING NORMALIZATION : some-thing becomes someThing !
-                        'landTextureChoice': '=landTexture',          // 'isolateProperty': '=normalizedProperty' and in the DOM future-normalized-property="parentProperty"
-                        'mountainBumpScaleValue': '=mountainBumpScale'
+                        'landscapeParameters': '=landscapeParameters',  // Pay attention to the FUCKING NORMALIZATION : some-thing becomes someThing !
+                        'territoryParameters': '=territoryParameters'   // 'isolateProperty': '=normalizedProperty' and in the DOM future-normalized-property="parentProperty"
                     },
 
                     // This isolate scope will use its own controller
                     controller: function($scope, $document, $timeout, territoryLoader, textureLoader, shaderLoader)
                     {
 
-                        // Load textures and get a promise to use it right after it has been loaded
-                        $scope.texturePromise = textureLoader.getTextures(['grass3.jpg', 'texture_dirt.jpg', 'texture_sand.jpg', 'texture_grass.jpg', 'texture_rock.jpg', 'texture_snow.jpg', 'heightmap1.png', "ocean_texture.jpg", "cloudEffectTexture.png", "depthmap.png"]);
+                        // Initialize variables to handle texture loading
+                        $scope.landscapeTextureIndices = {};
+                        $scope.territoryTextureIndices = {};
+                        var landscapeTextures = [];
+                        var territoryTextures = [];
+
+                        // Gather landscape texture names and store their indices with their key strings
+                        Object.keys($scope.landscapeParameters["textures"]).forEach(function(key, index) {
+                            landscapeTextures.push(this[key].path);
+                            $scope.landscapeTextureIndices[key] = index;
+                        }, $scope.landscapeParameters["textures"]);
+
+                        // Gather territory texture names and store their indices with their key strings
+                        Object.keys($scope.territoryParameters["textures"]).forEach(function(key, index) {
+                            territoryTextures.push(this[key].path);
+                            $scope.territoryTextureIndices[key] = index;
+                        }, $scope.territoryParameters["textures"]);
+
+
+                        // Load landscape textures and get a promise to use it right after it has been loaded
+                        $scope.landscapeTexturePromise = textureLoader.getTextures(landscapeTextures);
+                        
+                        // Load territory textures and get a promise to use it right after it has been loaded
+                        $scope.territoryTexturePromise = textureLoader.getTextures(territoryTextures);
 
                         // Load territory data and get a promise to use it right after it has been loaded
                         $scope.territoryPromise = territoryLoader.getTerritories();
 
                         // Load shaders ang get a promise to use it right after it has been loaded
-                        $scope.shaderPromise = shaderLoader.getShaders(["vertex_shader", "fragment_shader", "vertex_shader_water", "fragment_shader_water"]);
+                        $scope.shaderPromise = shaderLoader.getShaders(["vertex_shader", "fragment_shader", "vertex_shader_water", "fragment_shader_water", "vertex_shader_landscape", "fragment_shader_landscape"]);
 
+                        
                         // Bind "keypress" event to window.document to handle keyboard events
                         // No other way to do it since other ways only work on input elements
                         $document.bind('keypress', function(key)
@@ -139,32 +161,78 @@ angular.module("nbWebgl", [])
                         scene.add(borderMesh);
 
 
-                        // Create the background mesh
-                        var backgroundGeometry = new THREE.PlaneGeometry(1000, 680, 100, 68);
-                        var backgroundUniforms = {
-                            baseTexture: { type: "t" },
-                            baseSpeed: { type: "f", value: 0.1 },
-                            noiseTexture: { type: "t" },
-                            noiseScale: { type: "f", value: 0.05 },
-                            dirtTexture: { type: "t" },
-                            depthmap: { type: "t" },
-                            alpha: { type: "f", value: 0.9 },
-                            time: { type: "f", value: 1.0 }
+                        // Create the landscape mesh
+                        var landscapeGeometry = new THREE.PlaneGeometry(1000, 680, 511, 255);
+                        var landscapeUniforms = {
+                            bumpTexture:    { type: "t" },
+                            snowTexture:    { type: "t" },
+                            rockTexture:    { type: "t" },
+                            forestTexture:  { type: "t" },
+                            trunkTexture:   { type: "t" },
+                            waterTexture:   { type: "t" },
+                            dirtTexture:    { type: "t" },
+                            noiseTexture:   { type: "t" },
+                            waterUV: {
+                                type: "v2",
+                                value: new THREE.Vector2(
+                                    scope.landscapeParameters['textures']['water'].u,
+                                    scope.landscapeParameters['textures']['water'].v
+                                )},
+                            snowUV: {
+                                type: "v2",
+                                value: new THREE.Vector2(
+                                    scope.landscapeParameters['textures']['snow'].u,
+                                    scope.landscapeParameters['textures']['snow'].v
+                                )},
+                            rockUV: {
+                                type: "v2",
+                                value: new THREE.Vector2(
+                                    scope.landscapeParameters['textures']['rock'].u,
+                                    scope.landscapeParameters['textures']['rock'].v
+                                )},
+                            dirtUV: {
+                                type: "v2",
+                                value: new THREE.Vector2(
+                                    scope.landscapeParameters['textures']['dirt'].u,
+                                    scope.landscapeParameters['textures']['dirt'].v
+                                )},
+                            forestUV: {
+                                type: "v2",
+                                value: new THREE.Vector2(
+                                    scope.landscapeParameters['textures']['forest'].u,
+                                    scope.landscapeParameters['textures']['forest'].v
+                                )},
+                            trunkUV: {
+                                type: "v2",
+                                value: new THREE.Vector2(
+                                    scope.landscapeParameters['textures']['trunk'].u,
+                                    scope.landscapeParameters['textures']['trunk'].v
+                                )},
+                            noiseUV: {
+                                type: "v2",
+                                value: new THREE.Vector2(
+                                    scope.landscapeParameters['textures']['noise'].u,
+                                    scope.landscapeParameters['textures']['noise'].v
+                                )},
+                            baseSpeed:  { type: "f", value: scope.landscapeParameters['floats']['baseSpeed']    },
+                            noiseScale: { type: "f", value: scope.landscapeParameters['floats']['noiseScale']   },
+                            alpha:      { type: "f", value: scope.landscapeParameters['floats']['alpha']        },
+                            bumpScale:  { type: "f", value: scope.landscapeParameters['floats']['bumpScale']    },
+                            time:       { type: "f", value: 1.0 }
                         };
-                        var backgroundMaterial = new THREE.ShaderMaterial(
-                            {
-                                uniforms: backgroundUniforms
-                            }
-                        );
-                        var backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
-                        scene.add(backgroundMesh);
-
+                        var landscapeMaterial = new THREE.ShaderMaterial({
+                            uniforms: landscapeUniforms,
+                            wireframe: false
+                        });
+                        var landscapeMesh = new THREE.Mesh(landscapeGeometry, landscapeMaterial);
+                        scene.add(landscapeMesh);
+                        
 
                         // Initialize geometry and material for the territory meshes
                         var territoryGeometries = [];
                         var frontTerritoryMaterial = new THREE.MeshPhongMaterial();
                         var backTerritoryMaterial = new THREE.MeshPhongMaterial({ visible: false });
-                        var sideTerritoryMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+                        var sideTerritoryMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
                         var territoryMaterials = [frontTerritoryMaterial, sideTerritoryMaterial, backTerritoryMaterial];
                         var territoryMaterial = new THREE.MeshFaceMaterial(territoryMaterials);
                         var territoryMeshes = [];
@@ -207,23 +275,12 @@ angular.module("nbWebgl", [])
                         var frontierMeshes = [];
 
                         // Initialize geometry and material for the mountain meshes
-                        //var mountainGeometries = geometryBuilder.getMountains();
-                        //var mountainUniforms = { blabla: { type: "t" } }
-                        //var mountainMaterial = {new THREE.ShaderMaterial({ uniforms: mountainUniforms });
-                        //var mountainMeshes = [];
-                        //for (var i = 0; i < mountainGeometries.length; i++) {
-                        //var mountainMesh = new THREE.Mesh(mountainGeometries[i], mountainMaterial);
-                        //mountainMeshes.push(mountainMesh);
-                        //}
-                        //var mountainBumpTexture = new THREE.TextureLoader().load('textures/heightmap1.png');
-                        //var mountainBumpScale = 50.0;
                         var mountainGeometry = new THREE.PlaneGeometry(365, 235, 73, 47);
-
                         var mountainUniforms = {
                             bumpTexture: { type: "t"/*, value: mountainBumpTexture*/ },
-                            bumpScale: { type: "f", value: scope.mountainBumpScaleValue },
+                            bumpScale: { type: "f", value: scope.territoryParameters['floats']['bumpScale'] },
                             dirtTexture: { type: "t"/*, value: dirtTexture*/ },
-                            sandTexture: { type: "t"/*, value: sandTexture*/ },
+                            //sandTexture: { type: "t"/*, value: sandTexture*/ },
                             grassTexture: { type: "t"/*, value: grassTexture*/ },
                             rockTexture: { type: "t"/*, value: rockTexture*/ },
                             snowTexture: { type: "t"/*, value: snowTexture*/ }
@@ -244,7 +301,6 @@ angular.module("nbWebgl", [])
                             mountainMesh.geometry.vertices[i].x = (mountainMesh.geometry.vertices[i].x-1035) / 2.07;
                             mountainMesh.geometry.vertices[i].y = (mountainMesh.geometry.vertices[i].y-707.5) / ratioY;
                         }
-
                         mountainMesh.translateZ(-26);
 
 
@@ -255,92 +311,7 @@ angular.module("nbWebgl", [])
                         // Create the territory meshes, including their outlines, mountains and frontiers
                         scope.territoryPromise.then(function(territoryData)
                         {
-
-
-
-
-
-
-
-
-
-
-
-
-                            // TESTS just some info about territory geometries
-                            var maxXs = [];
-                            var maxYs = [];
-                            var minXs = [];
-                            var minYs = [];
-
-                            for (var i = 0; i < territoryData.length; i++)
-                            {
-                                var maxX = 0;
-                                var maxY = 0;
-                                var minX = 2070;
-                                var minY = 1415;
-
-                                for (var j = 0; j < territoryData[i].geometry.length; j++)
-                                {
-
-                                    for (var k = 0; k < territoryData[i].geometry[j].length / 2; k++)
-                                    {
-                                        if (territoryData[i].geometry[j][2*k] > maxX)
-                                        {
-                                            maxX = territoryData[i].geometry[j][2*k];
-                                        }
-                                        if (territoryData[i].geometry[j][2*k] < minX)
-                                        {
-                                            minX = territoryData[i].geometry[j][2*k];
-                                        }
-                                        if (territoryData[i].geometry[j][2*k+1] > maxY)
-                                        {
-                                            maxY = territoryData[i].geometry[j][2*k+1];
-                                        }
-                                        if (territoryData[i].geometry[j][2*k+1] < minY)
-                                        {
-                                            minY = territoryData[i].geometry[j][2*k+1];
-                                        }
-                                    }
-
-                                }
-
-                                maxXs.push(maxX);
-                                maxYs.push(maxY);
-                                minXs.push(minX);
-                                minYs.push(minY);
-
-                            }
-
-
-                            for (var i = 0; i < maxXs.length; i++)
-                            {
-                                console.log("territory" + (i+1) + " : minX=" + minXs[i] + " ; maxX=" + maxXs[i] + " ; " + "minY=" + minYs[i] + " ; " + "maxY=" + maxYs[i]);
-                                console.log("territory" + (i+1) + " : X = [" + minXs[i] + ", " + maxXs[i] + "] ; Y = [" + minYs[i] + ", " + maxYs[i] + "]");
-                                console.log("territory" + (i+1) + " : X = [" + (minXs[i] - minXs[i]) + ", " + (maxXs[i] - minXs[i]) + "] ; Y = [" + (minYs[i] - minYs[i]) + ", " + (maxYs[i] - minYs[i]) + "]");
-                            }
-
-                            for (var i = 0; i < territoryData[0].geometry.length; i++)
-                            {
-                                for (var j = 0; j < territoryData[0].geometry[i].length / 2; j++)
-                                {
-                                    console.log("X = " + (territoryData[0].geometry[i][2*j] - minXs[0]) + " ; Y = " + (territoryData[0].geometry[i][2*j+1] - minYs[0]));
-                                }
-                            }
-
-                            // FIN DES TESTS
-
-
-
-
-
-
-
-
-
-
-
-
+                            
                             // Send the data to the service
                             geometryBuilder.setTerritoryData(territoryData);
 
@@ -479,80 +450,68 @@ angular.module("nbWebgl", [])
                             mountainMaterial.fragmentShader = shaders[1];
                             mountainMaterial.needsUpdate = true;
 
-                            // Get and set the vertex and fragment shaders for the background material
-                            backgroundMaterial.vertexShader = shaders[2];
-                            backgroundMaterial.fragmentShader = shaders[3];
-                            backgroundMaterial.needsUpdate = true;
+                            // Get and set the vertex and fragment shaders for the landscape material
+                            landscapeMaterial.vertexShader = shaders[4];
+                            landscapeMaterial.fragmentShader = shaders[5];
+                            landscapeMaterial.needsUpdate = true;
 
                         });
 
+                        // Get the landscape textures
+                        scope.landscapeTexturePromise.then(function(textures) {
 
-                        // Get the textures
-                        scope.texturePromise.then(function(textures) {
+                            // Iterate on each landscape texture
+                            Object.keys(scope.landscapeTextureIndices).forEach(function(key, index) {
 
-                            // Get and set territory texture
-                            frontTerritoryTexture = textures[0];
-                            //initTexture(frontTerritoryTexture, THREE.RepeatWrapping, 1/1000, 1/680, 0.492, 0.501);
-                            initTexture(frontTerritoryTexture, THREE.RepeatWrapping, 1/1, 1/0.68, 0.0, 0.0);
+                                // By default, set wrapping mode to repeat...
+                                textures[this[key]].wrapS = textures[this[key]].wrapT = THREE.RepeatWrapping;
 
-                            // Get and set the dirt texture
-                            var dirtTexture = textures[1];
-                            initTexture(dirtTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
+                                // ...Except for the bump texture
+                                if (key === "bump")
+                                {
+                                    textures[this[key]].wrapS = textures[this[key]].wrapT = THREE.ClampToEdgeWrapping;
+                                }
 
-                            // Get and set the sand texture
-                            var sandTexture = textures[2];
-                            initTexture(sandTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
+                                // Update landscape uniforms with the texture
+                                landscapeUniforms[key + "Texture"].value = textures[this[key]];
 
-                            // Get and set the grass texture
-                            var grassTexture = textures[3];
-                            initTexture(grassTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
+                            }, scope.landscapeTextureIndices);
 
-                            // Get and set the rock texture
-                            var rockTexture = textures[4];
-                            initTexture(rockTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
+                            // Why not ?
+                            landscapeMaterial.needsUpdate = true;
 
-                            // Get and set the snow texture
-                            var snowTexture = textures[5];
-                            initTexture(snowTexture, THREE.RepeatWrapping, 10.0, 10.0, 0.0, 0.0);
-
-                            // Get and set the heightmap for the mountains
-                            var mountainHeightmap1 = textures[6];
-                            initTexture(mountainHeightmap1, THREE.ClampToEdgeWrapping);
-
-                            // Get and set the ocean texture
-                            var oceanTexture = textures[7];
-                            initTexture(oceanTexture, THREE.RepeatWrapping, 1.0, 1.0, 0.0, 0.0);
-
-                            // Get and set the noise texture
-                            var noiseTexture = textures[8];
-                            initTexture(noiseTexture, THREE.RepeatWrapping, 1.0, 1.0, 0.0, 0.0);
-
-                            // Get and set the depthmap for the ocean
-                            var oceanDepthmapTexture = textures[9];
-                            initTexture(oceanDepthmapTexture, THREE.ClampToEdgeWrapping);
-
-
-                            // Assign the textures to their materials
-                            //backgroundMaterial.map = waterTexture;
-                            //backgroundMaterial.needsUpdate = true;               // Not necessary
-
-                            frontTerritoryMaterial.map = frontTerritoryTexture;
-                            frontTerritoryMaterial.needsUpdate = true;      // Not necessary
-
-                            mountainUniforms.dirtTexture.value = dirtTexture;
-                            mountainUniforms.sandTexture.value = sandTexture;
-                            mountainUniforms.grassTexture.value = grassTexture;
-                            mountainUniforms.rockTexture.value = rockTexture;
-                            mountainUniforms.snowTexture.value = snowTexture;
-                            mountainUniforms.bumpTexture.value = mountainHeightmap1;
-
-                            backgroundUniforms.baseTexture.value = oceanTexture;
-                            backgroundUniforms.noiseTexture.value = noiseTexture;
-                            backgroundUniforms.dirtTexture.value = dirtTexture;
-                            backgroundUniforms.depthmap.value = oceanDepthmapTexture;
-
+                            mountainUniforms.dirtTexture.value = textures[3];
+                            //mountainUniforms.sandTexture.value = sandTexture;
+                            //mountainUniforms.grassTexture.value = grassTexture;
+                            mountainUniforms.rockTexture.value = textures[2];
+                            mountainUniforms.snowTexture.value = textures[1];
                         });
 
+                        // Get the territory textures
+                        scope.territoryTexturePromise.then(function(textures) {
+
+                            // Iterate on territory texture
+                            Object.keys(scope.territoryTextureIndices).forEach(function(key, index) {
+
+                                if (key === "land")
+                                {
+                                    textures[this[key]].wrapS = textures[this[key]].wrapT = THREE.RepeatWrapping;
+                                    textures[this[key]].repeat.set(1, 1/0.68);
+                                }
+
+                                //territoryUniforms[key + "Texture"].value = textures[this[key]];
+                            }, scope.territoryTextureIndices);
+
+                            //textures[0].wrapS = textures[0].wrapT = THREE.RepeatWrapping;
+                            //textures[0].repeat.set(1, 1/0.68);
+
+                            frontTerritoryMaterial.map = textures[0];
+                            frontTerritoryMaterial.needsUpdate = true;
+
+                            mountainUniforms.bumpTexture.value = textures[1];
+
+                        });
+                        
 
                         // Finally animate the scene
                         animate();
@@ -577,18 +536,12 @@ angular.module("nbWebgl", [])
                         // Update the controls and anything else you want to update in runtime
                         function update()
                         {
-
-
-                            // TESTS Sending time to shaders
-
+                            // Send time to shaders
                             var delta = clock.getDelta();
-                            backgroundUniforms.time.value += delta;
+                            landscapeUniforms.time.value += delta;
+                            landscapeMaterial.needsUpdate = true;
 
-                            // FIN DES TESTS
-
-
-
-
+                            // Move
                             controls.update();
                         }
 
@@ -600,63 +553,147 @@ angular.module("nbWebgl", [])
                         }
 
 
-                        // Update territory texture when another texture is picked by the user
-                        scope.$watch('mountainBumpScaleValue', function(newValue, oldValue, scope) {
-                            if (newValue !== oldValue)
-                            {
-                                mountainUniforms.bumpScale.value = newValue;
-                            }
-                        });
+                        // Update landscape uniforms whenever a parameter is changed by the user
+                        scope.$watch('landscapeParameters', function(newValue, oldValue, scope) {
 
-                        // Update water texture when another texture is picked by the user
-                        scope.$watch('oceanTextureChoice', function(newValue, oldValue, scope) {
-                            if (newValue !== oldValue)
-                            {
-                                textureLoader.getTexture(newValue).then(function(texture) {
-                                    var oceanTexture = texture;
-                                    initTexture(oceanTexture, THREE.RepeatWrapping, 1.0, 1.0, 0.0, 0.0);
-                                    backgroundUniforms.baseTexture.value = oceanTexture;
-                                });
-                            }
-                        });
+                            // Iterate on each key of the landscape parameters
+                            Object.keys(newValue).forEach(function(k, i) {
 
-                        // Update territory texture when another texture is picked by the user
-                        scope.$watch('landTextureChoice', function(newValue, oldValue, scope) {
-                            if (newValue !== oldValue)
-                            {
-                                textureLoader.getTexture(newValue).then(function(texture) {
-                                    frontTerritoryTexture = texture;
-                                    //initTexture(frontTerritoryTexture, THREE.RepeatWrapping, 1/1000, 1/680, 0.492, 0.501);
-                                    initTexture(frontTerritoryTexture, THREE.RepeatWrapping, 1/10, 1/6.8, 0.0, 0.0);
-                                    frontTerritoryMaterial.map = frontTerritoryTexture;
-                                    frontTerritoryMaterial.needsUpdate = true;
-                                });
-                            }
-                        });
+                                switch(k) {
 
-                        // Initialize the wrapping mode of a texture
-                        function initTexture(texture, mode, repeatU, repeatV, offsetU, offsetV) {
-                            switch(mode)
-                            {
-                                case THREE.ClampToEdgeWrapping:
-                                    texture.wrapS = texture.wrapT = mode;
-                                    texture.repeat.set(1,1);
-                                    texture.offset.set(0,0);
-                                    break;
-                                case THREE.RepeatWrapping:
-                                    texture.wrapS = texture.wrapT = mode;
-                                    texture.repeat.set(repeatU, repeatV);
-                                    texture.offset.set(offsetU, offsetV);
-                                    break;
-                                case THREE.MirroredRepeatWrapping:
-                                    // Not implemented yet, current wrapping mode will remain
-                                    break;
-                                default:
-                                    // Unexisting wrapping mode, current wrapping mode will remain
-                                    console.log("Warning : Attempt to initalize a texture with an unexisting wrapping mode.");
-                                    break;
-                            }
-                        }
+                                    case 'textures':
+                                        // Iterate on each texture
+                                        Object.keys(newValue[k]).forEach(function(key, index) {
+
+                                            // Check if the path value has changed
+                                            if (newValue[k][key].path !== oldValue[k][key].path)
+                                            {
+                                                // Load new texture and update uniforms
+                                                textureLoader.getTexture(newValue[k][key].path).then(function (texture) {
+                                                    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+                                                    landscapeUniforms[key + 'Texture'].value = texture;
+                                                });
+                                            }
+
+                                            // Check if the u value has changed
+                                            if (newValue[k][key].u !== oldValue[k][key].u)
+                                            {
+                                                // Update uniforms
+                                                landscapeUniforms[key + 'UV'].value.x = newValue[k][key].u;
+                                            }
+
+                                            // Check if the v value has changed
+                                            if (newValue[k][key].v != oldValue[k][key].v)
+                                            {
+                                                // Update uniforms
+                                                landscapeUniforms[key + 'UV'].value.y = newValue[k][key].v;
+                                            }
+
+                                        });
+                                        break;
+
+                                    case 'floats':
+                                        // Iterate on each float
+                                        Object.keys(newValue[k]).forEach(function(key, index) {
+
+                                            // Check if the value has changed
+                                            if (newValue[k][key] !== oldValue[k][key])
+                                            {
+                                                // Update uniforms
+                                                landscapeUniforms[key].value = newValue[k][key];
+                                            }
+
+                                        });
+                                        break;
+
+                                    default:
+                                        console.log("Unknown key detected in landscapeParameters !");
+                                        break;
+                                }
+
+                            });
+
+                            // Why not ?
+                            landscapeMaterial.needsUpdate = true;
+
+                        }, true);   // true means deep watch !
+
+
+                        // Update territory uniforms whenever a parameter is changed by the user
+                        scope.$watch('territoryParameters', function(newValue, oldValue, scope) {
+
+                            // Iterate on each key of the landscape parameters
+                            Object.keys(newValue).forEach(function(k, i) {
+
+                                switch (k) {
+
+                                    case 'textures':
+                                        // Iterate on each texture
+                                        Object.keys(newValue[k]).forEach(function (key, index) {
+
+                                            // Check if the path value has changed
+                                            if (newValue[k][key].path !== oldValue[k][key].path)
+                                            {
+                                                // Load the texture and update uniforms
+                                                textureLoader.getTexture(newValue[k][key].path).then(function (texture) {
+                                                    if (key === "land")
+                                                    {
+                                                        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+                                                        texture.repeat.set(1/10, 1/6.8);
+                                                        frontTerritoryMaterial.map = texture;
+                                                        frontTerritoryMaterial.needsUpdate = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        mountainUniforms[key + 'Texture'].value = texture;
+                                                    }
+
+                                                    //texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+                                                    //territoryUniforms[key + 'Texture'].value = texture;
+
+                                                });
+                                            }
+
+                                            // Check if the u value has changed
+                                            if (newValue[k][key].u !== oldValue[k][key].u)
+                                            {
+                                                //Update uniforms
+                                                frontTerritoryMaterial.map.repeat.set(1/newValue[k][key].u, 1/newValue[k][key].v);
+                                                //territoryUniforms[key + 'UV'].value.x = newValue[k][key].u;
+                                            }
+
+                                            // Check if the v value has changed
+                                            if (newValue[k][key].v != oldValue[k][key].v)
+                                            {
+                                                //Update uniforms
+                                                frontTerritoryMaterial.map.repeat.set(newValue[k][key].u, newValue[k][key].v);
+                                                //territoryUniforms[key + 'UV'].value.y = newValue[k][key].v;
+                                            }
+                                        });
+                                        break;
+
+                                    case 'floats':
+                                        // Iterate on each float
+                                        // Check if the value has changed
+                                        // Blablabla todo
+                                        if (newValue[k]['bumpScale'] !== oldValue[k]['bumpScale'])
+                                        {
+                                            mountainUniforms.bumpScale.value = newValue[k]['bumpScale'];
+                                        }
+                                        break;
+
+                                    default:
+                                        console.log("Unknown key detected in territoryParameters !");
+                                        break;
+                                }
+
+                            });
+
+                            // Why not ?
+                            territoryMaterial.needsUpdate = true;
+
+                        }, true);   // true means deep watch !
+                        
                     }
                 }
             }

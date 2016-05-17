@@ -1,6 +1,5 @@
 //uniform sampler2D text;
 uniform sampler2D dirtTexture;
-uniform sampler2D sandTexture;
 uniform sampler2D grassTexture;
 uniform sampler2D rockTexture;
 uniform sampler2D snowTexture;

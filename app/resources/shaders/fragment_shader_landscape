@@ -1,0 +1,62 @@
+uniform sampler2D snowTexture;
+uniform sampler2D rockTexture;
+uniform sampler2D forestTexture;
+uniform sampler2D trunkTexture;
+uniform sampler2D waterTexture;
+uniform sampler2D dirtTexture;
+uniform sampler2D noiseTexture;
+uniform vec2 snowUV;
+uniform vec2 rockUV;
+uniform vec2 forestUV;
+uniform vec2 trunkUV;
+uniform vec2 waterUV;
+uniform vec2 dirtUV;
+uniform vec2 noiseUV;
+uniform float baseSpeed;
+uniform float noiseScale;
+uniform float alpha;
+uniform float time;
+
+varying float mountainValue;
+varying float forestValue;
+varying float waterValue;
+varying vec2 vUv;
+
+void main()
+{
+    // Initialize tmp variables
+    vec4 snow;
+    vec4 rock;
+    vec4 forest;
+    vec4 trunk;
+    vec4 water;
+    vec4 dirt;
+
+    if ((mountainValue > forestValue) && (mountainValue > waterValue))
+    {
+        // Compute mountain texture
+        rock = (1.0 - smoothstep(0.7, 0.8, mountainValue)) * texture2D(rockTexture, vUv * (rockUV));
+        snow   =  smoothstep(0.7, 0.8, mountainValue) * texture2D(snowTexture, vUv * snowUV);
+    }
+    else if ((forestValue > mountainValue) && (forestValue > waterValue))
+    {
+        // Compute forest texture
+        trunk  = (1.0 - smoothstep(0.5, 0.55, forestValue)) * texture2D(trunkTexture, vUv * trunkUV);
+        forest =  smoothstep(0.55, 0.6, forestValue) * texture2D(forestTexture, vUv * forestUV);
+    }
+    else
+    {
+        // Compute noise effect
+        vec2 uvTimeShift = vUv * noiseUV + vec2( -0.7, 1.5 ) * time * baseSpeed;
+        vec4 noiseGeneratorTimeShift = texture2D( noiseTexture, uvTimeShift);
+        vec2 uvNoiseTimeShift = vUv + noiseScale * vec2( noiseGeneratorTimeShift.r, -noiseGeneratorTimeShift.b );
+
+        // Compute water texture
+        water = texture2D(waterTexture, uvNoiseTimeShift * waterUV);
+        dirt = texture2D(dirtTexture, vUv * dirtUV) * (1.0 - alpha);
+    }
+
+    // Assign the final color
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0) + rock + snow + forest + trunk + water + dirt;
+
+}
