@@ -65,91 +65,223 @@
 
 </div>
 
+<div id="progress-info">
+    Work is still on progress.
+
+    Depending on the last commits, you may not be able to experience anything.
+    </br>
+    Look further to see some isolated parts of the project.
+</div>
+
 <div id="homepage-container-3" ng-class="{'blur': isShadowVisible}">
+
+    <img src="resources/textures/blackspeech.png" class="black-speech"/>
+
+    <h3 class="title">Pour la petite histoire...</h3>
+
+    <h6 class="subtitle">Le projet est né en mars 2016 suite à une partie jouée avec ma petite sœur.</h6>
+
+    <div class="content">
+        <div id="story">
+            <p>
+                <i>Qu'avait-elle de spéciale cette partie ?</i>
+                <b>C'était la toute première.</b>
+                </br>
+                La toute première depuis Noël 2004, jour où j'ai reçu le jeu en cadeau...
+                </br>
+                </br>
+                Quel naïf j'ai été de penser trouver facilement un adversaire pour un jeu dont les règles font 24 pages A4 !
+                </br>
+                (Monopoly, je te hais)
+                </br>
+                </br>
+                <i>Alors quoi ? J'ai pu mettre fin à une frustration longue de plus de dix ans. Et alors ?</i>
+                </br>
+                </br>
+                <b>Première constatation</b>, la complexité de ce type de jeu de société décourage une grande partie
+                de la population qui ne sait pas à côté de quoi elle passe, ce qui condamne son utilisation à une heureuse minorité, souvent appelée rollistes.
+                Sa portation au format numérique permettrait d'agrandir sa communauté de joueurs en simplifiant l'apprentissage des règles
+                et surtout, de ne pas  attendre dix ans pour trouver un adversaire et un espace qui convienne pour jouer (mais non, je ne rage pas !).
+                </br>
+                </br>
+                <b>Seconde constatation</b>, je viens de sortir de mon école d'ingénieur, je dois trouver un stage, et je ne sais <b>RIEN</b>.
+                </br>
+                Enfin, rien, j'ai bien sûr suivi assidûment plein de cours et de tutoriels...
+                </br>
+                <i>Bref je vais me prendre une claque sur le terrain.</i>
+                </br>
+                </br>
+                Et çà, c'est hors de question. J'aime avoir l'impression de servir à quelque chose et être fier de ce que je produis.
+                Alors il est temps de se retrousser les manches et de mettre à l'épreuve les domaines qui m'intéressent, à savoir le web et la 3D.
+                Mille heures de théorie ne vaudront jamais de mettre les mains dans le cambouis et de passer des semaines à se tirer
+                les cheveux parce qu'on a oublié une virgule à la ligne 874 de notre projet.
+                </br>
+                </br>
+                Sans pour autant être particulièrement geek, rolliste ou fanatique de l'univers de Tolkien,
+                recréer l'univers du Seigneur des Anneaux pour me faire la main semblait à la fois démesurément insensé et fascinant,
+                exactement ce qu'il me fallait !
+                </br>
+                </br>
+                (Pour la traduction anglaise, vous repasserez)
+            </p>
+        </div>
+    </div>
 
     <img src="resources/textures/blackspeech.png" class="black-speech"/>
 
     <h3 class="title">More about the project</h3>
 
-    <div id="about-project-intro">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis turpis augue, dignissim vel aliquam a, vehicula id risus.
-            Cras in lorem vitae enim maximus finibus. Pellentesque quis pellentesque ipsum.
-            Integer sed diam eget elit pretium mattis ac eu ligula.
-        </p>
+    <h6 class="subtitle">Who are AngularJS and ThreeJS and why did I chose them ?</h6>
+
+    <div class="content">
+        <div id="technologies">
+
+            <div class="technology">
+                <p>
+                    <a href="https://angularjs.org/" target="_blank"><img src="resources/textures/angular-icon.png" id="angular-logo"/></a>
+                    <a href="https://angularjs.org/" target="_blank">AngularJS</a> is an open-source framework developed by Google.
+                    But that, <a href="https://fr.wikipedia.org/wiki/AngularJS" target="_blank">Wikipedia</a> will explain it better than me.
+                    </br>
+                    </br>
+                    Web technologies are constantly evolving. PHP is giving way to NodeJS and suchlike
+                    while the jQuery juggernaut is replaced or extended by new powerful frameworks as AngularJS and <a href="https://www.javascripting.com/" target="_blank">so many others</a>.
+                    The choice of a framework obviously depends on your needs for a project but also on your affinity with the concepts a framework is based on.
+                    </br>
+                    </br>
+                    Before entering the great world of web development,
+                    I used to work a lot with object-oriented programming languages such as Java or C#.
+                    That's why I'm not comfortable with the laxity of pure Javascript.
+                    But I discovered that a lot of frameworks emerged not only to add tools to work with,
+                    but also to integrate a logical structure into web projects.
+                    Among them, I tried BackboneJS and I wanted to give a try to AngularJS.
+                    </br>
+                    </br>
+                    My feeling ? Backbone is efficient, I loved it, but compared to AngularJS,
+                    it requires too much lines of code to do simple tasks.
+                    AngularJS structures your code in such a way as to develop an healthy and highly testable web application.
+                    It also provides useful tools such as the famous two-way data binding.
+                    </br>
+                    </br>
+                    I really enjoyed its features and I'm convinced that this framework has a bright future ahead of it.
+                    That's why I definitely wanted to learn AngularJS within this project.
+                </p>
+            </div>
+
+            <div class="technology">
+                <p>
+                    <a href="http://threejs.org/" target="_blank"><img src="resources/textures/webgl-three-icon.png" id="three-logo"/></a>
+                    <a href="http://threejs.org/" target="_blank">ThreeJS</a> is a Javascript library to create and put 3D stuff into your web application without any plugins.
+                    It's nothing more than that but doesnt that sound amazing ?
+                    </br>
+                    </br>
+                    So why is ThreeJS so interesting ? Because it's powerful.
+                    It makes full use of <a href="https://www.khronos.org/webgl/" target="_blank">WebGL</a> standard to render graphics, which means that
+                    graphics are computed by the GPU rather than the CPU.
+                    </br>
+                    </br>
+                    If you don't know what all this is about,
+                    before WebGL you had to use Flash technology (and its obsolete plugin) to draw 3D scenes in your web application.
+                    Besides compatibility issues, Flash doesn't benefit from the GPU power,
+                    which means that 3D content is energy intensive and highly restricted.
+                    </br>
+                    </br>
+                    And this is where WebGL comes in, having the good idea to use the hardware acceleration from the GPU
+                    to compute and render graphics in a web application !
+                    And it only comes with good news :
+                    no necessary plugin anymore, the CPU is relieved from a heavy burden and 3D content is happily unbridled !
+                    </br>
+                    </br>
+                    In this story, ThreeJS offers us optimized tools to quickly develop 3D applications for the web and avoid to write the redundant code.
+                    And it does that with one main goal : make 3D understandable by dummies.
+                </p>
+            </div>
+
+        </div>
     </div>
 
-    <div id="technologies">
+    <img src="resources/textures/blackspeech.png" class="black-speech"/>
 
-        <div class="technology-row">
-            <div class="technology-logo">
-                <a href="https://angularjs.org/" target="_blank"><img src="resources/textures/angular-icon.png" class="icon"/></a>
+    <h3 class="title">Credits</h3>
+
+    <div class="content">
+        <div id="credits">
+            <p>
+                Bien que ce projet ne soit pas à but lucratif,
+                j'aimerais remercier les auteurs des différentes textures
+                que j'ai pu emprunter sur la toile ainsi que ceux dont les travaux m'ont inspirés.
+                </br>
+                </br>
+                Even though the project is not-for-profit,
+                I would like to thank the authors of the various textures I found on the web
+                and those whose work inspired me :
+            </p>
+            <ul id="credit-list">
+                <li class="credit-item" ng-repeat="c in credits">
+                    <a ng-if="c.link !== ''" href="{{c.link}}" target="_blank">{{c.author}}</a>
+                    <b ng-if="c.link === ''">{{c.author}}</b>
+                    , {{c.thanks}}.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <img src="resources/textures/blackspeech.png" class="black-speech"/>
+
+    <h3 class="title">About me</h3>
+
+    <h6 class="subtitle">Nicolas Buecher, élève ingénieur de 23 ans, Strasbourg</h6>
+
+    <div class="content">
+
+        <div id="about-me">
+            <div id="profile-picture">
+                <img src="resources/textures/profileweird2.jpg" class="rounded-image"/>
+                <p class="profile-note">Urgent : Mettre une autre photo de profil que ma photo d'identité d'il y a 4 ans.</p>
+                <p class="profile-note">Urgent 2 : Réflexion faite, retrouver ma photo d'identité, c'est pas sérieux là.</p>
+
+                <div id="profile-contact">
+                    <p id="contact-title">Contact</p>
+                    <div class="contact">
+                        <img src="resources/textures/mail-icon.png" id="contact-icon">
+                        <a href="mailto:buecher.nicolas@gmail.com &subject=[Contact WOTR]" id="mail-link">buecher.nicolas@gmail.com</a>
+                    </div>
+                </div>
             </div>
-            <div class="technology-info">
+
+            <div id="profile-content">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis turpis augue, dignissim vel aliquam a, vehicula id risus.
-                    Cras in lorem vitae enim maximus finibus. Pellentesque quis pellentesque ipsum.
-                    Integer sed diam eget elit pretium mattis ac eu ligula.
+                    Développeur web, mobile et 3D, je suis passionné de nouvelles technologies
+                    et compte bien passer le plus clair des années à venir à les mettre en œuvre.
+                    </br>
+                    </br>
+                    Entrepreneur dans l'âme, je souhaite être acteur des innovations à venir et c'est pourquoi je m'intéresse aux technologies qui ont le vent en poupe.
+                    Créer, construire, inventer, c'est çà qui me motive à bloc chaque jour !
+                    </br>
+                    </br>
+                    Ma philosophie, c'est la diversité : je veux tout connaître, tout expérimenter, tout voir.
+                    J'accorde énormément d'importance à ne pas m'enfermer dans une case.
+                    Pourquoi faut-il absolument pour adhérer à une philosophie en mépriser une autre ?
+                    Alors qu'en sortant la tête de son trou, on pourrait profiter des plaisirs qu'offre chaque activité sur Terre.
+                    Si certains préfèrent s'en priver par ignorance, ce n'est pas mon cas, j'aime bien trop vivre pour çà.
+                    </br>
+                    </br>
+                    PS: Ne vous fiez pas à la photo, je suis plus souriant en vrai !
                 </p>
             </div>
         </div>
 
-        <div class="technology-row">
-            <div class="technology-logo">
-                <a href="http://threejs.org/" target="_blank"><img src="resources/textures/webgl-three-icon.png" class="icon"/></a>
-            </div>
-            <div class="technology-info">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis turpis augue, dignissim vel aliquam a, vehicula id risus.
-                    Cras in lorem vitae enim maximus finibus. Pellentesque quis pellentesque ipsum.
-                    Integer sed diam eget elit pretium mattis ac eu ligula.
-                </p>
-            </div>
+        <div id="links">
+            <a href="https://www.linkedin.com/in/nicolas-buecher" target="_blank" class="link">
+                <img class="icon" src="resources/textures/linkedin-logo.png">
+            </a>
+            <a href="https://github.com/NicolasBuecher/war-of-the-ring-project" target="_blank" class="link">
+                <img class="icon" src="resources/textures/github-logo.png">
+            </a>
         </div>
 
     </div>
 
     <img src="resources/textures/blackspeech.png" class="black-speech"/>
-
-    <h3 id="credits-title" class="title">Credits</h3>
-
-    <div id="credits">
-        <p>
-            Bien que ce projet ne soit pas à but lucratif,
-            j'aimerais remercier les auteurs des différentes textures
-            que j'ai pu emprunter sur la toile ainsi que ceux dont les travaux m'ont inspirés :
-        </p>
-        <ul id="credit-list">
-            <li ng-repeat="c in credits">
-                <a ng-if="c.link !== ''" href="{{c.link}}" target="_blank">{{c.author}}</a>
-                <b ng-if="c.link === ''">{{c.author}}</b>
-                , {{c.thanks}}.
-            </li>
-            <li>
-                MrDoob, auteur de la bibliothèque ThreeJS, pour son phénoménal travail, sa doc et ses nombreux exemples.
-            </li>
-            <li>
-                stemkosky, contributeur de la bibliothèque ThreeJS, pour ses innombrables exemples d'utilisation de la bibliothèque, tous aussi ingénieusement construits les uns que les autres.
-            </li>
-            <li>
-                Etc. Utiliser ngRepeat ici. Penser à mettre des liens si possible.
-            </li>
-        </ul>
-    </div>
-
-    <img src="resources/textures/blackspeech.png" class="black-speech"/>
-
-    <h3 id="about-me-title" class="title">About me</h3>
-
-    <div id="about-me">
-        <img src=""/>
-        <p>Prénom. Nom. Age. Strasbourg ?</p>
-        <p>Contact: mettre à jour linkedin, mail.</p>
-        <p>Brève description de ma philosophie</p>
-    </div>
-
-        <!--<b>Diversité</b>. C'est le mot qui me caractérise le plus. Quel que soit le domaine, je veux toujours toucher à tout.
-        Qui peut le plus, peut le moins.-->
 
 </div>
 

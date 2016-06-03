@@ -20,8 +20,7 @@
 #homepage-header {
     display: block;
     width: 100%;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    padding: 1% 0;
 }
 
 /*Contains the title as an image to center*/
@@ -36,10 +35,7 @@
 /*Contains an additional information to center, with the title font*/
 #homepage-subtitle {
     display: block;
-    margin-top: 1%;
-    margin-bottom: 1%;
-    margin-left: 12.5%;
-    margin-right: 12.5%;
+    margin: 1% 15%;
 
     font-family: "Trajan Pro", Candara, sans-serif;
     font-size: 3em;
@@ -51,8 +47,7 @@
     display: table;
     width: 100%;
     border-spacing: 0em 1.5em;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    padding: 1% 0;
 
     font-family: Candara, sans-serif;
     font-size: 1.5em;
@@ -87,10 +82,7 @@
 
     display: block;
     width: 15%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1%;
-    margin-bottom: 1%;
+    margin: 0 auto;
 }
 
 /*Show the user he can click this element*/
@@ -140,6 +132,234 @@
     color: black;
 }
 
+/*Progress notification is centered, small and italic*/
+#progress-info {
+    display: block;
+    padding: 2% 10%;
+
+    font-family: Candara, sans-serif;
+    font-size: 1.3em;
+    font-style: italic;
+    text-align: center;
+}
+
+/*Contains an intro, links to libraries websites and text*/
+#homepage-container-3 {
+    width: 100%;
+    transition: -webkit-filter ease-in 1s;
+}
+
+/*An image to make a simple separation between two parts of the website*/
+.black-speech {
+    display: block;
+    margin: 2% auto;
+    max-width: 100%;
+    height: auto;
+}
+
+/*Centered and title font for the element*/
+.title {
+    display: block;
+    margin: 1% 15%;
+
+    font-family: "Trajan Pro", Candara, sans-serif;
+    font-size: 3em;
+    text-align: center;
+}
+
+/* Centered and bigger standard font for the element */
+.subtitle {
+    display: block;
+    margin: 1% 10%;
+
+    font-family: Candara, sans-serif;
+    font-size: 1.8em;
+    font-weight: normal;
+    text-align: center;
+}
+
+/* Margin top and bottom and standard font for the element */
+.content {
+    display: block;
+    margin: 1% 0;
+
+    font-family: Candara, sans-serif;
+}
+
+/* The story is simply contained in a block filled with text */
+#story {
+    display: block;
+    padding: 2% 10%;
+
+    font-size: 1.5em;
+    text-align: center;
+}
+
+/* Each technology is simply contained in a block filled with text and floating image */
+#technologies {
+    display: block;
+
+    font-size: 1.5em;
+}
+
+/* Padding top and bottom for the element */
+.technology {
+    display: block;
+    padding: 2% 10%;
+}
+
+/* Angular logo is floating left */
+#angular-logo {
+    float: left;
+
+    display: block;
+    padding-right: 2%;
+    padding-bottom: 1%;
+    max-width: 20%;
+    height: auto;
+}
+
+/* While Three logo is floating right */
+#three-logo {
+    float: right;
+
+    display: block;
+    padding-left: 2%;
+    padding-bottom: 1%;
+    max-width: 20%;
+    height: auto;
+}
+
+/* Credits consist in a small text introduction and an angular list */
+#credits {
+    display: block;
+    padding: 2% 10%;
+
+    font-size: 1.5em;
+}
+
+/* Angular list of credits, reduce the size of the block */
+#credit-list {
+    display: block;
+    padding: 1% 5%;
+    padding-bottom: 0;
+
+    font-size: 0.95em;
+}
+
+/* Space list items to prevent them to sticking each other */
+.credit-item {
+    padding: 0.5% 0;
+}
+
+/* Info about the author is simply contained in a block filled with a float div on the left and surrounding text */
+#about-me {
+    display: block;
+    padding: 2% 10%;
+
+    font-size: 1.5em;
+}
+
+/* Picture and contact div is floating left */
+#profile-picture {
+    float: left;
+
+    display: block;
+    width: 25%;
+}
+
+/* Create a circle as a limit for the element */
+.rounded-image {
+    display: block;
+    margin: 2% auto;
+    max-width: 60%;
+    height: auto;
+
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+
+    overflow: hidden;
+}
+
+/* Italic and centered with smaller standard font for the element */
+.profile-note {
+    display: block;
+    padding: 2% 10%;
+    text-align: center;
+    font-style: italic;
+    font-size: 0.5em;
+}
+
+/* Elements are centered inside */
+#profile-contact {
+    display: block;
+    padding: 2% 5%;
+
+    text-align: center;
+}
+
+/* Bold with bigger standard font for the element */
+#contact-title {
+    display: block;
+    padding: 2% 5%;
+
+    font-size: 1.2em;
+    font-weight: bold;
+
+    overflow: hidden;
+}
+
+/* Padding and overflow for the element */
+.contact {
+    display: block;
+    padding: 2% 2%;
+
+    overflow: hidden;
+}
+
+/* The icon should be inline and proportional to the mail link */
+#contact-icon {
+    display: inline-block;
+    margin-right: 3%;
+    max-width: 9%;
+    height: auto;
+
+    vertical-align: middle;
+}
+
+/* Mail link should be inline with smaller standad font */
+#mail-link {
+    display: inline-block;
+
+    font-size: 0.8em;
+    vertical-align: middle;
+}
+
+/* Short description is contained in a simple block */
+#profile-content {
+    display: block;
+    padding: 2% 0;
+}
+
+/* Links to Linkedin and Github are centered on one line */
+#links {
+    padding-top: 2%;
+    text-align: center;
+}
+
+/* Links are spaced each other */
+.link {
+    margin: 0 15%;
+    max-width: 10%;
+}
+
+/* The icon and the link should share the same width */
+.icon {
+    max-width: 100%;
+    height: auto;
+}
+
 /*Cover the whole page with a black transparent block*/
 #shadow {
     position: fixed;
@@ -160,122 +380,4 @@
 /*Hide the shadow block setting its opacity property to 0*/
 #shadow.ng-hide {
     opacity: 0;
-}
-
-/*Contains an intro, links to libraries websites and text*/
-#homepage-container-3 {
-    width: 100%;
-    transition: -webkit-filter ease-in 1s;
-}
-
-/*An image to make a simple separation between two parts of the website*/
-.black-speech {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    max-width: 100%;
-    height: auto;
-}
-
-/*Introduction has to be centered, text with the basic font*/
-#about-project-intro {
-    display: block;
-
-    margin-top: 1%;
-    margin-bottom: 1%;
-    margin-left: 10%;
-    margin-right: 10%;
-
-    font-family: Candara, sans-serif;
-    font-size: 1.5em;
-    text-align: center;
-
-}
-
-/*Technologies infos are contained in a table, with the basic font*/
-#technologies {
-    display: table;
-    width: 100%;
-    border-spacing: 0em 1.5em;
-    padding-top: 1%;
-    padding-bottom: 1%;
-
-    font-family: Candara, sans-serif;
-    font-size: 1.3em;
-}
-
-/*Each row of the table contains two table-cell to organize the text in two columns*/
-.technology-row {
-    display: table-row;
-    width: 100%;
-}
-
-/*The first column contains a technology logo in each cell*/
-.technology-logo {
-    display: table-cell;
-    width: 20%;
-    padding-left: 15%;
-    padding-right: 1%;
-}
-
-/*The second column contains an additional information in each cell*/
-.technology-info {
-    display: table-cell;
-    width: 48%;
-    padding-left: 1%;
-    padding-right: 15%;
-    vertical-align: middle;
-}
-
-/*Set the max-width of the technology logos to 100% of the cell*/
-.icon {
-    max-width: 100%;
-    height: auto;
-}
-
-/*Centered and title font for the element*/
-.title {
-    display: block;
-    margin-top: 1%;
-    margin-bottom: 1%;
-    margin-left: 15%;
-    margin-right: 15%;
-
-    font-family: "Trajan Pro", Candara, sans-serif;
-    font-size: 3em;
-    text-align: center;
-}
-
-#credits {
-    display: block;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-
-    font-family: Candara, sans-serif;
-    font-size: 1.5em;
-}
-
-#credit-list {
-    display: block;
-    padding-left: 5%;
-    padding-right: 1%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    font-family: Candara, sans-serif;
-    font-size: 0.89em; /*I don't understand why 1.3em doesn't work. Here 0.89em equals 1.3em of the other blocks*/
-}
-
-#about-me {
-    display: block;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-
-    font-family: Candara, sans-serif;
-    font-size: 1.5em;
 }

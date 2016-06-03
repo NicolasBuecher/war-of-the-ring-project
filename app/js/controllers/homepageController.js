@@ -15,24 +15,34 @@ angular.module('WarOfTheRingApp')
         // List of people to thank in the credits
         $scope.credits = [
             {
-                author: 'Mr.doob',
-                thanks: 'the author of the ThreeJS library, for his huge work, his doc and all his great examples',
+                author: 'Ricardo Cabello',
+                thanks: 'alias mrdoob on github, author of the ThreeJS library, for his huge work, his doc and all his great examples',
                 link: 'http://mrdoob.com'
             },
             {
-                author: 'stemkosky',
-                thanks: 'the author of numerous ThreeJS examples, for his very useful work',
-                link: ''
+                author: 'Lee Stemkoski',
+                thanks: 'alias stemkoski on github, author of numerous ThreeJS examples, for his very useful work',
+                link: 'http://home.adelphi.edu/~stemkoski/'
             },
             {
-                author: 'Author 3',
-                thanks: 'Thanks 3',
-                link: 'Link 3'
+                author: 'Paul Drumdorf',
+                thanks: 'author of the one ring 3D model (used as an image here)',
+                link: 'https://www.cgtrader.com/drumdorf'
             },
             {
-                author: 'Author 4',
-                thanks: 'Thanks 4',
-                link: 'Link 4'
+                author: 'Karacas',
+                thanks: 'author of ThreeJS logo (as the library doesn\'t have one yet)',
+                link: 'https://dribbble.com/karacas'
+            },
+            {
+                author: 'Dave Gandy',
+                thanks: 'author of Github and Linkedin icons',
+                link: 'http://www.flaticon.com/authors/dave-gandy'
+            },
+            {
+                author: 'OCHA',
+                thanks: 'author of mail icon',
+                link: 'http://www.flaticon.com/authors/ocha'
             }
         ];
 
