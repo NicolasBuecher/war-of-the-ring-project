@@ -65,15 +65,48 @@
 
 </div>
 
-<div id="progress-info">
-    Work is still on progress.
 
-    Depending on the last commits, you may not be able to experience anything.
-    </br>
-    Look further to see some isolated parts of the project.
-</div>
 
 <div id="homepage-container-3" ng-class="{'blur': isShadowVisible}">
+
+    <div id="progress-info">
+        Work is still in progress.
+        Depending on the last commits, you may not be able to experience anything.
+        </br>
+        Look below to see some isolated parts of the project.
+    </div>
+
+    <div id="carousel-container">
+        <div id="carousel-container-row">
+
+            <div class="left-arrow">
+                <img src="resources/textures/left-arrow.png" ng-click="moveCarousel(true);" class="carousel-arrow"/>
+            </div>
+
+            <div class="carousel">
+                <div ng-repeat="preview in previews"
+                     ng-if="isPreviewVisible(preview.id)"
+                     ng-class="{'preview': true,
+                    'left': isLeft(preview.id),
+                    'center': isCenter(preview.id),
+                    'right': isRight(preview.id),
+                    'waiting-left': isWaitingLeft(preview.id),
+                    'waiting-right': isWaitingRight(preview.id)
+                   }">
+
+                    <p class="preview-date">{{preview.date}}</p>
+                    <img ng-src="{{preview.src}}" ng-click="launchPreview(preview.id);" class="preview-image"/>
+                    <p class="preview-name">{{preview.name}}</p>
+
+                </div>
+            </div>
+
+            <div class="right-arrow">
+                <img src="resources/textures/right-arrow.png" ng-click="moveCarousel(false);" class="carousel-arrow"/>
+            </div>
+
+        </div>
+    </div>
 
     <img src="resources/textures/blackspeech.png" class="black-speech"/>
 
