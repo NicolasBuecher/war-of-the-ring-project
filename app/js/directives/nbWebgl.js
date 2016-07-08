@@ -15,11 +15,12 @@ angular.module("nbWebgl", [])
         [
             'textureLoader',
             'geometryBuilder',
-            function (textureLoader, geometryBuilder)
+            'settlementBuilder',
+            function (textureLoader, geometryBuilder, settlementBuilder)
             {
                 return {
 
-                    // Directive can be used as an element or as an attribute
+                    // Directive has to be used as an attribute
                     restrict: "A",          // When used as an element, pan doesn't work as it should, so use it as an attribute
 
                     // Create an isolate scope for this directive
@@ -105,7 +106,7 @@ angular.module("nbWebgl", [])
 
                             // Initialize camera and scene
                             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2000);
-                            camera.position.set(0, 0, 1000);
+                            camera.position.set(0, 0, 100);
                             scene = new THREE.Scene();
 
 
@@ -137,6 +138,7 @@ angular.module("nbWebgl", [])
                             // Has to be done AFTER the appendChild(renderer.domElement) call
                             // otherwise, you will lose the pan and rotate controls
                             controls = new THREE.TrackballControls(camera, elem[0]);
+                            //controls.target = new THREE.Vector3(0, 0, 500);
 
                         }
 
@@ -144,14 +146,20 @@ angular.module("nbWebgl", [])
                         // GEOMETRY AND TEXTURES, USE PROMISES
 
 
-                        // Initialize a basic directional light
+                        // Initialize basic ambient and directional lights
                         scene.add(new THREE.AmbientLight(0xffffff));
-                        var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-                        directionalLight.position.x = 0;
-                        directionalLight.position.y = 0;
-                        directionalLight.position.z = 10;
+                        var directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+                        directionalLight.position.x = 1;
+                        directionalLight.position.y = 1;
+                        directionalLight.position.z = 1;
                         directionalLight.position.normalize();
-                        scene.add(directionalLight); // what about a service for the light?
+                        scene.add(directionalLight);
+                        directionalLight = directionalLight.clone();
+                        directionalLight.position.x = -1;
+                        directionalLight.position.y = 1;
+                        directionalLight.position.z = 1;
+                        directionalLight.position.normalize();
+                        scene.add(directionalLight);
 
 
                         // Create the border mesh
@@ -228,6 +236,372 @@ angular.module("nbWebgl", [])
                         scene.add(landscapeMesh);
                         
 
+                        // Test Helm's Deep
+
+                        var helmsDeepGeometry = geometryBuilder.getHelmsDeep();
+                        helmsDeepGeometry.mergeVertices();
+                        helmsDeepGeometry.computeFaceNormals();
+                        helmsDeepGeometry.computeVertexNormals();
+                        var tex = new THREE.TextureLoader().load('resources/textures/rock-wall.jpg');
+                        var helmsDeepMaterial = new THREE.MeshPhongMaterial({ color: 0x333333, map: tex });
+                        var helmsDeepMesh = new THREE.Mesh(helmsDeepGeometry, helmsDeepMaterial);
+                        scene.add(helmsDeepMesh);
+                        helmsDeepMesh.rotateX(Math.PI/2);
+                        helmsDeepMesh.rotateY(3*Math.PI/4);
+                        helmsDeepMesh.position.z = 12.5;
+                        helmsDeepMesh.position.y = -10;
+                        helmsDeepMesh.position.x = -10;
+                        helmsDeepMesh.scale.set(20.0, 20.0, 20.0);
+
+
+                        var normal = new THREE.FaceNormalsHelper(helmsDeepMesh);
+                        //scene.add(normal);
+                        var wireframe = new THREE.WireframeHelper( helmsDeepMesh, 0x00ff00 );
+                        //scene.add(wireframe);
+
+                        console.log(helmsDeepMesh.geometry.vertices.length);
+
+                        var testG = settlementBuilder.getHelmsDeep();
+                        testG.mergeVertices();
+                        testG.computeFaceNormals();
+                        testG.computeVertexNormals();
+                        var testM = new THREE.Mesh(testG, helmsDeepMaterial);
+                        scene.add(testM);
+                        testM.rotateX(Math.PI/2);
+                        testM.rotateY(3*Math.PI/4);
+                        testM.position.z = 30;
+                        testM.position.y = -10;
+                        testM.position.x = -10;
+                        testM.scale.set(20.0, 20.0, 20.0);
+
+                        normal = new THREE.FaceNormalsHelper(testM);
+                        scene.add(normal);
+                        wireframe = new THREE.WireframeHelper(testM, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        console.log("NUMBER OF VERTICES : " + testG.vertices.length);
+                        console.log("NUMBER OF FACES : " + testG.faces.length);
+
+                        // Big Wall
+                        /*var helmGeometry = new THREE.BoxGeometry(0.6, 0.2, 0.05);
+                        var textureLoader = new THREE.TextureLoader();
+                        textureLoader.load('resources/textures/rock-wall.jpg', function(texture) {
+                            texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+                            var frontTexture = texture.clone();
+                            frontTexture.needsUpdate = true;
+                            var sideTexture = texture.clone();
+                            sideTexture.needsUpdate = true;
+                            var topTexture = texture.clone();
+                            topTexture.needsUpdate = true;
+
+                            frontTexture.repeat.set(5.0, 2.0);
+                            sideTexture.repeat.set(1.0, 2.0);
+                            topTexture.repeat.set(5.0, 1.0);
+
+                            var helmMaterials = [
+                                new THREE.MeshPhongMaterial({ map: sideTexture }),
+                                new THREE.MeshPhongMaterial({ map: sideTexture }),
+                                new THREE.MeshPhongMaterial({ map: topTexture }),
+                                new THREE.MeshPhongMaterial({ map: topTexture }),
+                                new THREE.MeshPhongMaterial({ map: frontTexture }),
+                                new THREE.MeshPhongMaterial({ map: frontTexture })
+                            ];
+
+                            var helmMaterial = new THREE.MeshFaceMaterial(helmMaterials);
+                            var helmMesh = new THREE.Mesh(helmGeometry, helmMaterial);
+                            //scene.add(helmMesh);
+                            //helmMesh.position.z = 600;
+                            //helmMesh.scale.set(250.0, 250.0, 250.0);
+
+                            var helm1_bsp = new ThreeBSP(helmMesh);
+
+                            helmGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.05, 18, 1, false, 1.57, 3.14);
+                            helmMaterial = new THREE.MeshPhongMaterial();
+                            helmMesh = new THREE.Mesh(helmGeometry, helmMaterial);
+                            //scene.add(helmMesh);
+                            //helmMesh.position.z = 600;
+                            helmMesh.translateY(-0.1);
+                            helmMesh.rotateX(THREE.Math.degToRad(90));
+                            //helmMesh.scale.set(250.0, 250.0, 250.0);
+
+                            var helm2_bsp = new ThreeBSP(helmMesh);
+                            var result = helm1_bsp.subtract(helm2_bsp).toMesh(new THREE.MeshPhongMaterial());
+                            scene.add(result);
+                            result.position.z = 600;
+                            result.scale.set(250.0, 250.0, 250.0);
+
+                            helmGeometry = new THREE.BoxGeometry()
+                        });
+*/
+                        /*
+                        wall_texture.wrapS = wall_texture.wrapT = THREE.RepeatWrapping;
+                        var frontTexture = wall_texture.clone();
+                        wall_texture.needsUpdate = true;
+                        frontTexture.repeat.set(5.0, 2.0);
+                        var sideTexture = wall_texture;
+                        sideTexture.repeat.set(1.0, 2.0);
+                        var topTexture = wall_texture;
+                        topTexture.repeat.set(1.0, 5.0);*//*
+                        var helmMaterials = [
+                            new THREE.MeshPhongMaterial({ map: frontTexture }),
+                            new THREE.MeshPhongMaterial({ map: sideTexture }),
+                            new THREE.MeshPhongMaterial({ map: topTexture }),
+                            new THREE.MeshPhongMaterial({ map: topTexture }),
+                            new THREE.MeshPhongMaterial({ map: sideTexture }),
+                            new THREE.MeshPhongMaterial({ map: frontTexture })
+                        ];
+                        var helmMaterial = new THREE.MeshFaceMaterial(helmMaterials);
+                        //var helmMaterial = new THREE.MeshPhongMaterial();
+                        var helmMesh = new THREE.Mesh(helmGeometry, helmMaterial);
+                        scene.add(helmMesh);
+                        helmMesh.position.z = 600;
+                        helmMesh.scale.set(250.0, 250.0, 250.0);
+*/
+                        /*
+                        var helm1Geometry = new THREE.BoxGeometry(0.6, 0.2, 0.05);
+                        var helm1_bsp = new ThreeBSP( helm1Geometry );
+                        var helm2Geometry = new THREE.CylinderGeometry(0.1, 0.1, 0.05, 18, 1, false, 1.57, 3.14);
+                        helm2Geometry.rotateX(THREE.Math.degToRad(90));
+                        helm2Geometry.translate(0, -0.1, 0);
+                        var helm2_bsp = new ThreeBSP( helm2Geometry );
+                        var result = helm1_bsp.subtract(helm2_bsp);
+                        //result = result.toMesh(new THREE.MeshPhongMaterial());
+                        var textureLoader = new THREE.TextureLoader();
+                        var texture = textureLoader.load('resources/textures/rock-wall.jpg');
+                        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+                        texture.repeat.set(5.0, 2.0);
+                        result = new THREE.Mesh(result.toGeometry(), new THREE.MeshPhongMaterial({ map: texture }));
+                        scene.add(result);
+                        result.position.z = 600;
+                        result.scale.set(250.0, 250.0, 250.0);
+
+                        var wireframe = new THREE.WireframeHelper( result, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        var options = {
+                            curveSegments: 1,
+                            steps: 1,
+                            amount: 0.01,
+                            bevelEnabled: true,
+                            bevelThickness: 0.002,
+                            bevelSize: 0.002,
+                            bevelSegments: 1,
+                            material: 0,
+                            extrudeMaterial: 1
+                        };
+                        var points = [
+                            new THREE.Vector2(0.0, 0.0),
+                            new THREE.Vector2(0.0, 0.005),
+                            new THREE.Vector2(0.02, 0.005),
+                            new THREE.Vector2(0.02, 0.0),
+                            new THREE.Vector2(0.0, 0.0)
+                        ];
+                        var shapes = new THREE.Shape(points);
+                        var helm3Geometry = new THREE.ExtrudeGeometry(shapes, options);
+                        var helmMaterial = new THREE.MeshPhongMaterial();
+                        var helmMesh = new THREE.Mesh(helm3Geometry, helmMaterial);
+                        helmMesh.rotateX(THREE.Math.degToRad(90));
+                        helmMesh.position.z = 604.5;
+                        helmMesh.scale.set(250.0, 250.0, 250.0);
+                        helmMesh.translateZ(-27.5);
+                        helmMesh.translateX(-74.5);
+                        scene.add(helmMesh);
+
+                        var group = new THREE.Group();
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        helmMesh = helmMesh.clone().translateX(10);
+                        scene.add(helmMesh);
+                        group.add(helmMesh);
+
+                        wireframe = new THREE.WireframeHelper( helmMesh, 0x00ff00 );
+                        scene.add(wireframe);
+
+                        scene.add(group);
+                        group.translateX(2);
+
+                        helmMaterial.map = texture;
+                        helmMaterial.needsUpdate = true;
+*/
+                        /*var helmGeometry = new THREE.BoxGeometry(0.6, 0.2, 0.05);
+                        var helmMaterial = new THREE.MeshPhongMaterial();
+                        var helmMesh = new THREE.Mesh(helmGeometry, helmMaterial);
+                        scene.add(helmMesh);
+                        helmMesh.position.z = 600;
+                        helmMesh.scale.x = 250.0;
+                        helmMesh.scale.y = 250.0;
+                        helmMesh.scale.z = 250.0;
+
+                        var helm1_bsp = new ThreeBSP( helmMesh );
+
+                        var helmGeometry2 = new THREE.CylinderGeometry(0.1, 0.1, 0.05, 18, 1, false, 1.57, 3.14);
+                        var helmMesh2 = new THREE.Mesh(helmGeometry2, helmMaterial);
+                        scene.add(helmMesh2);
+                        helmMesh2.position.z = 600;
+                        helmMesh2.position.y = -25;
+                        helmMesh2.rotateX(THREE.Math.degToRad(90));
+                        helmMesh2.scale.set(250.0, 250.0, 250.0);
+
+                        var helm2_bsp = new ThreeBSP( helmMesh2 );
+
+                        var subtract_bsp = helm1_bsp.subtract( helm2_bsp );
+                        var result = subtract_bsp.toMesh( new THREE.MeshPhongMaterial() );
+                        scene.add(result);
+                        result.translateZ(50);*/
+/*
+                        var cube_geometry = new THREE.CubeGeometry( 3, 3, 3 );
+                        var cube_mesh = new THREE.Mesh( cube_geometry );
+                        cube_mesh.position.x = -7;
+                        var cube_bsp = new ThreeBSP( cube_mesh );
+                        var sphere_geometry = new THREE.SphereGeometry( 1.8, 32, 32 );
+                        var sphere_mesh = new THREE.Mesh( sphere_geometry );
+                        sphere_mesh.position.x = -7;
+                        var sphere_bsp = new ThreeBSP( sphere_mesh );
+
+                        var subtract_bsp = cube_bsp.subtract( sphere_bsp );
+                        var result = subtract_bsp.toMesh( new THREE.MeshPhongMaterial() );
+                        result.geometry.computeVertexNormals();
+                        scene.add( result );
+                        var edges = new THREE.VertexNormalsHelper( result, 2, 0x00ff00, 1 );
+                        scene.add( edges );*/
+/*
+                        // Big Wall
+                        var wallGeometry = new THREE.BoxGeometry(200, 50, 20);
+                        var wallMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+                        var wallMesh = new THREE.Mesh(wallGeometry, wallMaterial);
+                        scene.add(wallMesh);
+                        wallMesh.position.z = 500;
+                        // Tower
+                        var tower1Geometry = new THREE.BoxGeometry(10, 125, 1);
+                        var tower1Material = new THREE.MeshPhongMaterial({ color: 0x333333 });
+                        var tower1Mesh = new THREE.Mesh(tower1Geometry, tower1Material);
+                        scene.add(tower1Mesh);
+                        tower1Mesh.position.z = 500;
+                        tower1Mesh.translateX(100);
+                        tower1Mesh.translateY(50);
+                        tower1Mesh.translateZ(-10);
+                        tower1Mesh.rotateY(THREE.Math.degToRad(45));
+                        var tower2Mesh = tower1Mesh.clone();
+                        scene.add(tower2Mesh);
+                        tower2Mesh.rotateY(THREE.Math.degToRad(90));
+                        // Bridge
+                        // Doors
+                        // First stage
+                        var firstStageGeometry = new THREE.CylinderGeometry(50, 50, 50, 10, 1);
+                        var firstStageMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+                        var firstStageMesh = new THREE.Mesh(firstStageGeometry, firstStageMaterial);
+                        scene.add(firstStageMesh);
+                        firstStageMesh.position.z = 500;
+                        firstStageMesh.translateX(150);
+                        // Second stage
+                        var secondStageGeometry = new THREE.CylinderGeometry(30, 30, 75, 10, 1);
+                        var secondStageMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+                        var secondStageMesh = new THREE.Mesh(secondStageGeometry, secondStageMaterial);
+                        scene.add(secondStageMesh);
+                        secondStageMesh.position.z = 500;
+                        secondStageMesh.translateX(150);
+                        secondStageMesh.translateY(12.5);
+                        // Entry of caverns
+                        var wallGeometry = new THREE.BoxGeometry(200, 50, 20);
+                        var wallMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+                        var wallMesh = new THREE.Mesh(wallGeometry, wallMaterial);
+                        scene.add(wallMesh);
+                        wallMesh.position.z = 500;
+*/
                         // Initialize geometry and material for the territory meshes
                         var territoryGeometries = [];
                         var frontTerritoryMaterial = new THREE.MeshPhongMaterial();

@@ -17,7 +17,7 @@
 
 /*Is wrapped with a backgorund image for the homepage, should remove it for the game*/
 body {
-    background-image: url('../resources/textures/background.jpg');
+    background-image: url('../resources/textures/background18.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;

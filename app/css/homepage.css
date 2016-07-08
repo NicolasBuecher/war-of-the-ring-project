@@ -344,8 +344,8 @@
     margin: 1% 10%;
 
     font-family: Candara, sans-serif;
-    font-size: 1.8em;
-    font-weight: normal;
+    font-size: 2em;
+    //font-weight: normal;
     text-align: center;
 }
 
@@ -515,7 +515,7 @@
 
 /* Links to Linkedin and Github are centered on one line */
 #links {
-    padding-top: 2%;
+    padding: 2% 0;
     text-align: center;
 }
 

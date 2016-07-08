@@ -20,8 +20,8 @@ angular.module('WarOfTheRingApp')
 
 
         // Return an unique texture in a promise, can be used by both getTexture and getTextures functions
-        var loadTexture = function(textureName) {
-
+        var loadTexture = function(textureName)
+        {
             // Create deferred to handle asynchronous operations
             var deferred = $q.defer();
 
@@ -65,7 +65,6 @@ angular.module('WarOfTheRingApp')
 
             // Return promise
             return deferred.promise;
-
         };
 
 

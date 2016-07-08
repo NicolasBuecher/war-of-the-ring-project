@@ -1,0 +1,49 @@
+#container-404 {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    font-family: sans-serif;
+    text-align: center;
+}
+
+#message-404 {
+    position: relative;
+    top: 20%;
+
+    font-size: 7em;
+}
+
+#joke-404 {
+    position: relative;
+    top: 20%;
+
+    font-size: 1em;
+    font-weight: bold;
+    font-style: italic;
+}
+
+#sorry-404 {
+    position: relative;
+    top: 20%;
+
+    margin: 2%;
+
+    font-size: 3em;
+}
+
+#backlink-404 {
+    position: relative;
+    top: 20%;
+
+    margin: 4%;
+
+    font-size: 2em;
+    font-weight: bold;
+    color: darkred;
+
+    cursor: pointer;
+}
